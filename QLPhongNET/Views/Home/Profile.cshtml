@@ -1,0 +1,30 @@
+﻿@model QLPhongNET.Models.User
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<h2>Thông tin cá nhân</h2>
+
+<table class="table">
+    <tr>
+        <th>Tên đăng nhập:</th>
+        <td>@Model.Username</td>
+    </tr>
+    <tr>
+        <th>Họ tên:</th>
+        <td>@Model.FullName</td>
+    </tr>
+    <tr>
+        <th>Số điện thoại:</th>
+        <td>@Model.Phone</td>
+    </tr>
+    <tr>
+        <th>Số dư tài khoản:</th>
+        <td>@Model.Balance đ</td>
+    </tr>
+    <tr>
+        <th>Vai trò:</th>
+        <td>@Model.Role</td>
+    </tr>
+</table>

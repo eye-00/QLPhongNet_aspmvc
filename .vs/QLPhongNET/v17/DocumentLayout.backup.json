@@ -1,0 +1,445 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Code\\repos\\QLPhongNET\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\usagesessionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\usagesessionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\data\\qlphongnetcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\data\\qlphongnetcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\views\\home\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\views\\home\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\views\\home\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\views\\home\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\computercategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\computercategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\views\\shared\\_layoutdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\views\\shared\\_layoutdashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\computer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\computer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\usagesession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\usagesession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\serviceusagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\serviceusagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\dailyrevenuescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\dailyrevenuescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\computerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\computerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\controllers\\computercategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\controllers\\computercategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\dailyrevenue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\dailyrevenue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\serviceusage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\serviceusage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|d:\\code\\repos\\qlphongnet\\qlphongnet\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D87AA11B-4ED8-465E-9E5F-6415F0BDB832}|QLPhongNET\\QLPhongNET.csproj|solutionrelative:qlphongnet\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAewDkAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:56:02.031Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Contact.cshtml",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Contact.cshtml",
+              "RelativeDocumentMoniker": "QLPhongNET\\Views\\Home\\Contact.cshtml",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Contact.cshtml",
+              "RelativeToolTip": "QLPhongNET\\Views\\Home\\Contact.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T08:55:43.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "About.cshtml",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\About.cshtml",
+              "RelativeDocumentMoniker": "QLPhongNET\\Views\\Home\\About.cshtml",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\About.cshtml",
+              "RelativeToolTip": "QLPhongNET\\Views\\Home\\About.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T08:55:23.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Profile.cshtml",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Profile.cshtml",
+              "RelativeDocumentMoniker": "QLPhongNET\\Views\\Home\\Profile.cshtml",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Profile.cshtml",
+              "RelativeToolTip": "QLPhongNET\\Views\\Home\\Profile.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T08:54:05.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "QLPhongNET\\Views\\Home\\Dashboard.cshtml",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Dashboard.cshtml",
+              "RelativeToolTip": "QLPhongNET\\Views\\Home\\Dashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T08:53:22.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsageSessionsController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\UsageSessionsController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\UsageSessionsController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\UsageSessionsController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\UsageSessionsController.cs",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:48:45.478Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ServicesController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ServicesController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\ServicesController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ServicesController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\ServicesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:47:46.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ServiceUsagesController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ServiceUsagesController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\ServiceUsagesController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ServiceUsagesController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\ServiceUsagesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:47:03.735Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "DailyRevenuesController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\DailyRevenuesController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\DailyRevenuesController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\DailyRevenuesController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\DailyRevenuesController.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:44:54.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:43:13.95Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ComputersController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ComputersController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\ComputersController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ComputersController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\ComputersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:42:39.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ComputerCategoriesController.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ComputerCategoriesController.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Controllers\\ComputerCategoriesController.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Controllers\\ComputerCategoriesController.cs",
+              "RelativeToolTip": "QLPhongNET\\Controllers\\ComputerCategoriesController.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T08:41:53.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\appsettings.json",
+              "RelativeDocumentMoniker": "QLPhongNET\\appsettings.json",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\appsettings.json",
+              "RelativeToolTip": "QLPhongNET\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-18T07:41:03.725Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Program.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Program.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Program.cs",
+              "RelativeToolTip": "QLPhongNET\\Program.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAkwCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T07:37:31.53Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "QLPhongNetContext.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Data\\QLPhongNetContext.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Data\\QLPhongNetContext.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Data\\QLPhongNetContext.cs",
+              "RelativeToolTip": "QLPhongNET\\Data\\QLPhongNetContext.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAIwAMAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T07:28:48.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ServiceUsage.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\ServiceUsage.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\ServiceUsage.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\ServiceUsage.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\ServiceUsage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T07:35:24.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UsageSession.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\UsageSession.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\UsageSession.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\UsageSession.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\UsageSession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T04:29:22.459Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Service.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\Service.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\Service.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\Service.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\Service.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T04:29:18.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\ErrorViewModel.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T04:29:16.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "DailyRevenue.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\DailyRevenue.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\DailyRevenue.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\DailyRevenue.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\DailyRevenue.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T04:29:12.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\User.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\User.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\User.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T03:17:04.75Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Computer.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\Computer.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\Computer.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\Computer.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\Computer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T03:16:09.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ComputerCategory.cs",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\ComputerCategory.cs",
+              "RelativeDocumentMoniker": "QLPhongNET\\Models\\ComputerCategory.cs",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Models\\ComputerCategory.cs",
+              "RelativeToolTip": "QLPhongNET\\Models\\ComputerCategory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-13T03:14:21.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_LayoutDashboard.cshtml",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Shared\\_LayoutDashboard.cshtml",
+              "RelativeDocumentMoniker": "QLPhongNET\\Views\\Shared\\_LayoutDashboard.cshtml",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Shared\\_LayoutDashboard.cshtml",
+              "RelativeToolTip": "QLPhongNET\\Views\\Shared\\_LayoutDashboard.cshtml",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAMwE8AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-12T16:12:36.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "QLPhongNET\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "QLPhongNET\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-12T15:42:09.983Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Dashboard - Thống kê tổng quan</h2>
+
+<ul>
+    <li><strong>Tổng số người dùng:</strong> @ViewBag.TotalUsers</li>
+    <li><strong>Tổng số máy tính:</strong> @ViewBag.TotalComputers</li>
+    <li><strong>Tổng số dịch vụ:</strong> @ViewBag.TotalServices</li>
+
+    @if (ViewBag.TodayRevenue != null)
+    {
+        <li><strong>Doanh thu hôm nay:</strong></li>
+        <ul>
+            <li>Tiền chơi: @ViewBag.TodayRevenue.TotalUsageRevenue đ</li>
+            <li>Tiền nạp: @ViewBag.TodayRevenue.TotalRecharge đ</li>
+            <li>Tiền dịch vụ: @ViewBag.TodayRevenue.TotalServiceRevenue đ</li>
+        </ul>
+    }
+    else
+    {
+        <li>Chưa có doanh thu hôm nay.</li>
+    }
+</ul>
