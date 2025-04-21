@@ -6,25 +6,37 @@
 }
 
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">Quản lý người dùng</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Quản lý người dùng</h1>
+        <a href="@Url.Action("Create", "Users")" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm người dùng mới
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a asp-action="CreateUser" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Thêm người dùng mới
-            </a>
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Tên đăng nhập</th>
                             <th>Họ tên</th>
                             <th>Số điện thoại</th>
-                            <th>Số dư</th>
                             <th>Vai trò</th>
+                            <th>Số dư</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -32,24 +44,28 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.ID</td>
                                 <td>@item.Username</td>
                                 <td>@item.FullName</td>
                                 <td>@item.Phone</td>
-                                <td>@item.Balance.ToString("N0") VNĐ</td>
                                 <td>
-                                    @if (item.Role == QLPhongNET.Models.UserRole.Admin)
+                                    @switch (item.Role)
                                     {
-                                        <span class="badge badge-primary">Quản trị viên</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-secondary">Người dùng</span>
+                                        case UserRole.Admin:
+                                            <span class="badge bg-danger">Admin</span>
+                                            break;
+                                        case UserRole.User:
+                                            <span class="badge bg-primary">Người dùng</span>
+                                            break;
                                     }
                                 </td>
+                                <td>@item.Balance.ToString("N0") VNĐ</td>
                                 <td>
-                                    <a asp-action="EditUser" asp-route-id="@item.ID" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i> Sửa
+                                    <a href="@Url.Action("Edit", "Users", new { id = item.ID })" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="@Url.Action("Delete", "Users", new { id = item.ID })" class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Bạn có chắc muốn xóa người dùng này?')">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -65,8 +81,8 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
                 }
             });
         });

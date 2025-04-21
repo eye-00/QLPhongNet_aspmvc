@@ -27,9 +27,30 @@ namespace QLPhongNET.Controllers
             }
 
             var user = await _context.Users
-                .Include(u => u.UsageSessions.Where(s => s.EndTime == null))
-                    .ThenInclude(s => s.Computer)
-                        .ThenInclude(c => c.Category)
+                .Select(u => new
+                {
+                    u.ID,
+                    u.Username,
+                    u.Balance,
+                    ActiveSession = u.UsageSessions
+                        .Where(s => s.EndTime == null)
+                        .Select(s => new
+                        {
+                            s.ID,
+                            s.StartTime,
+                            Computer = new
+                            {
+                                s.Computer.Name,
+                                Category = new
+                                {
+                                    s.Computer.Category.Name,
+                                    s.Computer.Category.PricePerHour
+                                }
+                            }
+                        })
+                        .FirstOrDefault()
+                })
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
@@ -39,12 +60,15 @@ namespace QLPhongNET.Controllers
 
             var computers = await _context.Computers
                 .Include(c => c.Category)
+                .AsNoTracking()
                 .ToListAsync();
 
-            var services = await _context.Services.ToListAsync();
+            var services = await _context.Services
+                .AsNoTracking()
+                .ToListAsync();
 
-            ViewBag.CurrentUser = user;
-            ViewBag.CurrentSession = user.UsageSessions.FirstOrDefault();
+            ViewBag.CurrentUser = new User { ID = user.ID, Username = user.Username, Balance = user.Balance };
+            ViewBag.CurrentSession = user.ActiveSession;
             ViewBag.Services = services;
 
             return View(computers);
@@ -200,46 +224,75 @@ namespace QLPhongNET.Controllers
             var username = HttpContext.Session.GetString("Username");
             if (string.IsNullOrEmpty(username))
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login");
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == username);
+            
             if (user == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login");
             }
 
+            // Kiểm tra xem người dùng có phiên đang hoạt động không
+            var activeSession = await _context.UsageSessions
+                .FirstOrDefaultAsync(s => s.UserID == user.ID && s.EndTime == null);
+            
+            if (activeSession != null)
+            {
+                TempData["Error"] = "Bạn đang có một phiên sử dụng máy khác đang hoạt động";
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Kiểm tra máy tính có tồn tại và sẵn sàng không
             var computer = await _context.Computers
                 .Include(c => c.Category)
                 .FirstOrDefaultAsync(c => c.ID == computerId);
 
-            if (computer == null || computer.Status != ComputerStatus.Available)
+            if (computer == null)
             {
-                TempData["Error"] = "Máy tính không khả dụng";
-                return RedirectToAction(nameof(Index));
+                TempData["Error"] = "Không tìm thấy máy tính";
+                return RedirectToAction("Index", "Home");
             }
 
-            var currentSession = await _context.UsageSessions
-                .FirstOrDefaultAsync(s => s.UserID == user.ID && s.EndTime == null);
-
-            if (currentSession != null)
+            if (computer.Status != ComputerStatus.Available)
             {
-                TempData["Error"] = "Bạn đang có phiên sử dụng khác";
-                return RedirectToAction(nameof(Index));
+                TempData["Error"] = "Máy tính này không sẵn sàng để sử dụng";
+                return RedirectToAction("Index", "Home");
             }
 
+            // Kiểm tra số dư
+            if (user.Balance < computer.Category.PricePerHour)
+            {
+                TempData["Error"] = "Số dư của bạn không đủ để sử dụng máy này";
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Tạo phiên sử dụng mới
             var session = new UsageSession
             {
                 UserID = user.ID,
-                ComputerID = computerId,
+                ComputerID = computer.ID,
                 StartTime = DateTime.Now
             };
 
             computer.Status = ComputerStatus.InUse;
-            _context.UsageSessions.Add(session);
-            await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                _context.UsageSessions.Add(session);
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = "Bắt đầu sử dụng máy thành công";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi tạo phiên sử dụng mới");
+                TempData["Error"] = "Có lỗi xảy ra, vui lòng thử lại";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: User/EndSession
@@ -249,40 +302,44 @@ namespace QLPhongNET.Controllers
         {
             var username = HttpContext.Session.GetString("Username");
             if (string.IsNullOrEmpty(username))
-            {
-                return RedirectToAction("Login", "Account");
-            }
+                return RedirectToAction("Login");
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+                return RedirectToAction("Login");
 
             var session = await _context.UsageSessions
                 .Include(s => s.Computer)
                     .ThenInclude(c => c.Category)
-                .FirstOrDefaultAsync(s => s.ID == sessionId && s.UserID == user.ID);
+                .FirstOrDefaultAsync(s => s.ID == sessionId && s.UserID == user.ID && s.EndTime == null);
 
             if (session == null)
-            {
-                TempData["Error"] = "Không tìm thấy phiên sử dụng";
-                return RedirectToAction(nameof(Index));
-            }
+                return RedirectToAction("Index");
 
             session.EndTime = DateTime.Now;
-            var duration = (session.EndTime.Value - session.StartTime).TotalHours;
-            session.TotalCost = (decimal)(duration * (double)session.Computer.Category.PricePerHour);
+            var duration = session.EndTime.Value - session.StartTime;
+            var totalSeconds = (decimal)duration.TotalSeconds;
+            var hours = Math.Floor(totalSeconds / 3600);
+            var minutes = Math.Floor((totalSeconds % 3600) / 60);
+            var seconds = totalSeconds % 60;
+            
+            // Tính chi phí theo giây
+            var pricePerSecond = session.Computer.Category.PricePerHour / 3600m;
+            session.TotalCost = totalSeconds * pricePerSecond;
 
-            // Cập nhật số dư người dùng
             if (user.Balance < session.TotalCost)
             {
                 TempData["Error"] = "Số dư không đủ để thanh toán phiên sử dụng";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
 
+            // Cập nhật số dư người dùng
             user.Balance -= session.TotalCost.Value;
+            _context.Users.Update(user);
+
+            // Cập nhật trạng thái máy
             session.Computer.Status = ComputerStatus.Available;
+            _context.Computers.Update(session.Computer);
 
             // Cập nhật doanh thu ngày
             var today = DateTime.Today;
@@ -294,21 +351,95 @@ namespace QLPhongNET.Controllers
                 dailyRevenue = new DailyRevenue
                 {
                     ReportDate = today,
-                    TotalUsageRevenue = 0,
-                    TotalRecharge = 0,
-                    TotalServiceRevenue = 0
+                    TotalUsageRevenue = session.TotalCost.Value,
+                    TotalServiceRevenue = 0,
+                    TotalRecharge = 0
                 };
                 _context.DailyRevenues.Add(dailyRevenue);
-                await _context.SaveChangesAsync(); // Lưu để lấy ID
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                dailyRevenue.TotalUsageRevenue += session.TotalCost.Value;
+                _context.DailyRevenues.Update(dailyRevenue);
             }
 
-            dailyRevenue.TotalUsageRevenue += session.TotalCost.Value;
             session.DailyRevenueID = dailyRevenue.ID;
+            _context.UsageSessions.Update(session);
 
-            await _context.SaveChangesAsync();
-            TempData["Success"] = $"Đã kết thúc phiên sử dụng. Chi phí: {session.TotalCost.Value:N0} VNĐ";
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["Success"] = $"Đã kết thúc phiên sử dụng. Thời gian: {hours:00}:{minutes:00}:{seconds:00}. Chi phí: {session.TotalCost.Value:N0} VNĐ. Số dư còn lại: {user.Balance:N0} VNĐ";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Có lỗi xảy ra khi kết thúc phiên: " + ex.Message;
+            }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Recharge()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Recharge(decimal amount)
+        {
+            if (amount < 1000)
+            {
+                TempData["Error"] = "Số tiền nạp tối thiểu là 1,000 VNĐ";
+                return RedirectToAction("Recharge");
+            }
+
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Login");
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var request = new RechargeRequest
+            {
+                UserID = user.ID,
+                Amount = amount,
+                RequestTime = DateTime.Now,
+                Status = RechargeStatus.Pending
+            };
+
+            _context.RechargeRequests.Add(request);
+
+            // Tạo thông báo cho admin
+            var adminNotification = new Notification
+            {
+                UserID = user.ID,
+                Title = "Yêu cầu nạp tiền mới",
+                Content = $"Người dùng {user.Username} yêu cầu nạp {amount:N0} VNĐ",
+                CreatedTime = DateTime.Now,
+                Link = "/Admin/Recharge",
+                IsRead = false
+            };
+            _context.Notifications.Add(adminNotification);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Yêu cầu nạp tiền đã được gửi, vui lòng chờ admin xử lý";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Có lỗi xảy ra khi gửi yêu cầu: " + ex.Message;
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 } 

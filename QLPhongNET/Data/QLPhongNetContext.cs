@@ -17,6 +17,8 @@ namespace QLPhongNET.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<ServiceUsage> ServiceUsages { get; set; }
         public DbSet<DailyRevenue> DailyRevenues { get; set; }
+        public DbSet<RechargeRequest> RechargeRequests { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -79,12 +81,12 @@ namespace QLPhongNET.Data
                     .OnDelete(DeleteBehavior.Restrict);
                 
                 entity.HasOne(e => e.Computer)
-                    .WithMany()
+                    .WithMany(c => c.UsageSessions)
                     .HasForeignKey(e => e.ComputerID)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.DailyRevenue)
-                    .WithMany()
+                    .WithMany(d => d.UsageSessions)
                     .HasForeignKey(e => e.DailyRevenueID)
                     .OnDelete(DeleteBehavior.Restrict);
             });
@@ -113,12 +115,12 @@ namespace QLPhongNET.Data
                     .OnDelete(DeleteBehavior.Restrict);
                 
                 entity.HasOne(e => e.Service)
-                    .WithMany()
+                    .WithMany(s => s.ServiceUsages)
                     .HasForeignKey(e => e.ServiceID)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.DailyRevenue)
-                    .WithMany()
+                    .WithMany(d => d.ServiceUsages)
                     .HasForeignKey(e => e.DailyRevenueID)
                     .OnDelete(DeleteBehavior.Restrict);
             });
@@ -134,44 +136,41 @@ namespace QLPhongNET.Data
                 entity.Property(e => e.TotalServiceRevenue).HasPrecision(15, 2);
             });
 
-            // Cấu hình cho UsageSession
-            modelBuilder.Entity<UsageSession>()
-                .HasOne(s => s.User)
-                .WithMany(u => u.UsageSessions)
-                .HasForeignKey(s => s.UserID)
-                .OnDelete(DeleteBehavior.Restrict);
+            // RechargeRequest
+            modelBuilder.Entity<RechargeRequest>(entity =>
+            {
+                entity.ToTable("RechargeRequest");
+                entity.HasKey(e => e.ID);
+                entity.Property(e => e.Amount).HasPrecision(15, 2);
+                entity.Property(e => e.RequestTime).IsRequired();
+                entity.Property(e => e.Status).IsRequired();
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserID)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<UsageSession>()
-                .HasOne(s => s.Computer)
-                .WithMany(c => c.UsageSessions)
-                .HasForeignKey(s => s.ComputerID)
-                .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.DailyRevenue)
+                    .WithMany()
+                    .HasForeignKey(e => e.DailyRevenueID)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            // Cấu hình cho ServiceUsage
-            modelBuilder.Entity<ServiceUsage>()
-                .HasOne(su => su.User)
-                .WithMany(u => u.ServiceUsages)
-                .HasForeignKey(su => su.UserID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<ServiceUsage>()
-                .HasOne(su => su.Service)
-                .WithMany(s => s.ServiceUsages)
-                .HasForeignKey(su => su.ServiceID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Cấu hình cho DailyRevenue
-            modelBuilder.Entity<DailyRevenue>()
-                .HasMany(d => d.UsageSessions)
-                .WithOne(s => s.DailyRevenue)
-                .HasForeignKey(s => s.DailyRevenueID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<DailyRevenue>()
-                .HasMany(d => d.ServiceUsages)
-                .WithOne(su => su.DailyRevenue)
-                .HasForeignKey(su => su.DailyRevenueID)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Notification
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("Notification");
+                entity.HasKey(e => e.ID);
+                entity.Property(e => e.Title).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Content).IsRequired();
+                entity.Property(e => e.CreatedTime).IsRequired();
+                entity.Property(e => e.IsRead).HasDefaultValue(false);
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserID)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
             // Cấu hình chuyển đổi cho ComputerStatus
             modelBuilder.Entity<Computer>()

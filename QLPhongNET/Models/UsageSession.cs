@@ -10,6 +10,7 @@ namespace QLPhongNET.Models
             StartTime = DateTime.Now;
         }
 
+        [Key]
         public int ID { get; set; }
 
         [Required]
@@ -18,14 +19,15 @@ namespace QLPhongNET.Models
         [Required]
         public int ComputerID { get; set; }
 
-        public int? DailyRevenueID { get; set; }
-
         [Required]
         public DateTime StartTime { get; set; }
 
         public DateTime? EndTime { get; set; }
 
+        [Range(0, double.MaxValue, ErrorMessage = "Tổng tiền phải lớn hơn hoặc bằng 0")]
         public decimal? TotalCost { get; set; }
+
+        public int? DailyRevenueID { get; set; }
 
         [ForeignKey("UserID")]
         public virtual User? User { get; set; }

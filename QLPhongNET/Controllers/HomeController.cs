@@ -19,7 +19,7 @@ namespace QLPhongNET.Controllers
         }
 
         // Trang chính
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var username = HttpContext.Session.GetString("Username");
             if (string.IsNullOrEmpty(username))
@@ -27,26 +27,35 @@ namespace QLPhongNET.Controllers
                 return RedirectToAction("Login", "User");
             }
 
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            var user = await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Username == username);
+            
             if (user == null)
             {
+                HttpContext.Session.Clear();
                 return RedirectToAction("Login", "User");
             }
 
-            var currentSession = _context.UsageSessions
+            // Lấy phiên đang hoạt động của người dùng
+            var activeSession = await _context.UsageSessions
                 .Include(s => s.Computer)
                     .ThenInclude(c => c.Category)
-                .FirstOrDefault(s => s.UserID == user.ID && s.EndTime == null);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.UserID == user.ID && s.EndTime == null);
 
-            var computers = _context.Computers
+            var computers = await _context.Computers
                 .Include(c => c.Category)
-                .ToList();
+                .AsNoTracking()
+                .OrderBy(c => c.Name)
+                .ToListAsync();
 
-            var services = _context.Services.ToList();
-
-            ViewBag.CurrentUser = user;
-            ViewBag.CurrentSession = currentSession;
-            ViewBag.Services = services;
+            // Lưu thông tin người dùng vào ViewBag
+            ViewBag.Username = user.Username;
+            ViewBag.Balance = user.Balance;
+            ViewBag.Role = user.Role.ToString();
+            ViewBag.ActiveSession = activeSession;
+            ViewBag.UserID = user.ID;
 
             return View(computers);
         }

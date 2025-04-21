@@ -8,6 +8,62 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <style>
+        .wrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            min-height: 100vh;
+            background: #343a40;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        #sidebar.active {
+            margin-left: -250px;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #2c3136;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+
+        #sidebar ul li a {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            display: block;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #sidebar ul li a:hover {
+            background: #2c3136;
+        }
+
+        #content {
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+
+        .navbar {
+            padding: 15px 10px;
+            background: #fff;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 20px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -38,6 +94,21 @@
                         <i class="fas fa-list"></i> Quản lý loại máy
                     </a>
                 </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Services">
+                        <i class="fas fa-concierge-bell"></i> Quản lý dịch vụ
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Recharge">
+                        <i class="fas fa-money-bill-wave"></i> Quản lý nạp tiền
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Revenue">
+                        <i class="fas fa-chart-line"></i> Quản lý doanh thu
+                    </a>
+                </li>
             </ul>
         </nav>
 
@@ -49,8 +120,11 @@
                         <i class="fas fa-align-left"></i>
                     </button>
                     <div class="ml-auto">
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
-                            <i class="fas fa-sign-out-alt"></i> Thoát
+                        <a asp-controller="User" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-user"></i> Trang người dùng
+                        </a>
+                        <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
                         </a>
                     </div>
                 </div>
@@ -65,6 +139,13 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html> 

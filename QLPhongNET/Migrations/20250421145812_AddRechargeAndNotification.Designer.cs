@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QLPhongNET.Data;
 
@@ -11,9 +12,11 @@ using QLPhongNET.Data;
 namespace QLPhongNET.Migrations
 {
     [DbContext(typeof(QLPhongNetContext))]
-    partial class QLPhongNetContextModelSnapshot : ModelSnapshot
+    [Migration("20250421145812_AddRechargeAndNotification")]
+    partial class AddRechargeAndNotification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,13 +151,10 @@ namespace QLPhongNET.Migrations
                         .HasPrecision(15, 2)
                         .HasColumnType("decimal(15,2)");
 
-                    b.Property<int?>("DailyRevenueID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Note")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("ProcessedTime")
+                    b.Property<DateTime?>("ProcessTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("RequestTime")
@@ -168,8 +168,6 @@ namespace QLPhongNET.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("DailyRevenueID");
-
                     b.HasIndex("UserID");
 
                     b.ToTable("RechargeRequest", (string)null);
@@ -182,10 +180,6 @@ namespace QLPhongNET.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -220,7 +214,7 @@ namespace QLPhongNET.Migrations
                     b.Property<int>("ServiceID")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<decimal?>("TotalPrice")
                         .HasPrecision(15, 2)
                         .HasColumnType("decimal(15,2)");
 
@@ -344,18 +338,11 @@ namespace QLPhongNET.Migrations
 
             modelBuilder.Entity("QLPhongNET.Models.RechargeRequest", b =>
                 {
-                    b.HasOne("QLPhongNET.Models.DailyRevenue", "DailyRevenue")
-                        .WithMany()
-                        .HasForeignKey("DailyRevenueID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("QLPhongNET.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DailyRevenue");
 
                     b.Navigation("User");
                 });

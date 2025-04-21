@@ -319,5 +319,147 @@ namespace QLPhongNET.Controllers
         {
             return _context.ComputerCategories.Any(e => e.ID == id);
         }
+
+        // GET: Admin/Services
+        public async Task<IActionResult> Services()
+        {
+            var services = await _context.Services.ToListAsync();
+            return View(services);
+        }
+
+        // GET: Admin/Recharge
+        public async Task<IActionResult> Recharge()
+        {
+            var requests = await _context.RechargeRequests
+                .Include(r => r.User)
+                .Select(r => new
+                {
+                    r.ID,
+                    r.UserID,
+                    r.User,
+                    r.Amount,
+                    r.RequestTime,
+                    r.ProcessedTime,
+                    r.Status,
+                    r.Note
+                })
+                .OrderByDescending(r => r.RequestTime)
+                .ToListAsync();
+
+            return View(requests.Select(r => new RechargeRequest
+            {
+                ID = r.ID,
+                UserID = r.UserID,
+                User = r.User,
+                Amount = r.Amount,
+                RequestTime = r.RequestTime,
+                ProcessedTime = r.ProcessedTime,
+                Status = r.Status,
+                Note = r.Note
+            }).ToList());
+        }
+
+        // POST: Admin/ProcessRecharge
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProcessRecharge(int id, string action, string? note = null)
+        {
+            var request = await _context.RechargeRequests
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(r => r.ID == id);
+
+            if (request == null)
+            {
+                TempData["Error"] = "Không tìm thấy yêu cầu nạp tiền";
+                return RedirectToAction("Recharge");
+            }
+
+            if (request.Status != RechargeStatus.Pending)
+            {
+                TempData["Error"] = "Yêu cầu này đã được xử lý";
+                return RedirectToAction("Recharge");
+            }
+
+            bool isApproved = action.ToLower() == "approve";
+            request.Status = isApproved ? RechargeStatus.Approved : RechargeStatus.Rejected;
+            request.ProcessedTime = DateTime.Now;
+            request.Note = note;
+
+            if (isApproved)
+            {
+                // Cập nhật số dư người dùng
+                request.User.Balance += request.Amount;
+                _context.Users.Update(request.User);
+
+                // Cập nhật doanh thu ngày
+                var today = DateTime.Today;
+                var dailyRevenue = await _context.DailyRevenues
+                    .FirstOrDefaultAsync(d => d.ReportDate.Date == today);
+
+                if (dailyRevenue == null)
+                {
+                    dailyRevenue = new DailyRevenue
+                    {
+                        ReportDate = today,
+                        TotalUsageRevenue = 0,
+                        TotalServiceRevenue = 0,
+                        TotalRecharge = request.Amount
+                    };
+                    _context.DailyRevenues.Add(dailyRevenue);
+                }
+                else
+                {
+                    dailyRevenue.TotalRecharge += request.Amount;
+                    _context.DailyRevenues.Update(dailyRevenue);
+                }
+
+                // Tạo thông báo cho người dùng
+                var notification = new Notification
+                {
+                    UserID = request.UserID,
+                    Title = "Nạp tiền thành công",
+                    Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn đã được phê duyệt",
+                    CreatedTime = DateTime.Now,
+                    IsRead = false
+                };
+                _context.Notifications.Add(notification);
+            }
+            else
+            {
+                // Tạo thông báo từ chối cho người dùng
+                var notification = new Notification
+                {
+                    UserID = request.UserID,
+                    Title = "Nạp tiền bị từ chối",
+                    Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn bị từ chối. Lý do: {note ?? "Không có"}",
+                    CreatedTime = DateTime.Now,
+                    IsRead = false
+                };
+                _context.Notifications.Add(notification);
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["Success"] = isApproved 
+                    ? $"Đã phê duyệt yêu cầu nạp {request.Amount:N0} VNĐ cho {request.User.Username}"
+                    : $"Đã từ chối yêu cầu nạp {request.Amount:N0} VNĐ của {request.User.Username}";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Có lỗi xảy ra khi xử lý yêu cầu: " + ex.Message;
+            }
+
+            return RedirectToAction("Recharge");
+        }
+
+        // GET: Admin/Revenue
+        public async Task<IActionResult> Revenue()
+        {
+            var revenues = await _context.DailyRevenues
+                .OrderByDescending(r => r.ReportDate)
+                .ToListAsync();
+            return View(revenues);
+        }
     }
 } 

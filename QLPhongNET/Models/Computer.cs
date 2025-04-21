@@ -27,20 +27,17 @@ namespace QLPhongNET.Models
         [Required(ErrorMessage = "Vui lòng nhập tên máy")]
         [StringLength(30, ErrorMessage = "Tên máy không được vượt quá 30 ký tự")]
         [Display(Name = "Tên máy")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Vui lòng chọn trạng thái")]
-        [Display(Name = "Trạng thái")]
+        [Required]
         public ComputerStatus Status { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn loại máy")]
-        [Display(Name = "Loại máy")]
-        [Range(1, int.MaxValue, ErrorMessage = "Vui lòng chọn loại máy")]
+        [Required]
         public int CatID { get; set; }
 
         [ForeignKey("CatID")]
         public virtual ComputerCategory? Category { get; set; }
 
-        public virtual ICollection<UsageSession> UsageSessions { get; set; }
+        public virtual ICollection<UsageSession> UsageSessions { get; set; } = new List<UsageSession>();
     }
 }

@@ -1,6 +1,132 @@
-﻿@{
-    ViewData["Title"] = "Trang chính";
+﻿@model IEnumerable<QLPhongNET.Models.Computer>
+@using QLPhongNET.Models
+@{
+    ViewData["Title"] = "Trang chủ";
 }
 
-<h2>Chào mừng đến với hệ thống quản lý quán net</h2>
-<p>Hệ thống hỗ trợ quản lý máy tính, người dùng, dịch vụ và doanh thu hiệu quả.</p>
+<div class="container mt-4">
+    <!-- Thông tin người dùng -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-user me-2"></i>Thông tin người dùng
+                    </h5>
+                    <p class="card-text">
+                        <strong>Tên đăng nhập:</strong> @ViewBag.Username<br>
+                        <strong>Số dư:</strong> <span class="text-primary">@ViewBag.Balance?.ToString("N0") VNĐ</span>
+                    </p>
+                    <a href="@Url.Action("Recharge", "User")" class="btn btn-primary">
+                        <i class="fas fa-money-bill-wave me-2"></i>Nạp tiền
+                    </a>
+                </div>
+            </div>
+        </div>
+        @if (ViewBag.ActiveSession != null)
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-desktop me-2"></i>Phiên sử dụng đang hoạt động
+                        </h5>
+                        <p class="card-text">
+                            <strong>Máy:</strong> @ViewBag.ActiveSession.Computer.Name<br>
+                            <strong>Bắt đầu:</strong> @ViewBag.ActiveSession.StartTime.ToString("HH:mm:ss dd/MM/yyyy")<br>
+                            <strong>Thời gian sử dụng:</strong> <span id="usageTime">Đang tính...</span><br>
+                            <strong>Chi phí:</strong> <span id="currentCost">Đang tính...</span>
+                        </p>
+                        <form asp-controller="User" asp-action="EndSession" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="sessionId" value="@ViewBag.ActiveSession.ID" />
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn kết thúc phiên sử dụng?')">
+                                <i class="fas fa-stop-circle me-2"></i>Kết thúc phiên
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Danh sách máy tính -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">
+                        <i class="fas fa-desktop me-2"></i>Danh sách máy tính
+                    </h5>
+                    <div class="row">
+                        @foreach (var computer in Model)
+                        {
+                            <div class="col-md-3 mb-4">
+                                <div class="card h-100 @(computer.Status == ComputerStatus.Available ? "border-success" : "border-danger")">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@computer.Name</h5>
+                                        <p class="card-text">
+                                            <strong>Loại:</strong> @computer.Category.Name<br>
+                                            <strong>Giá:</strong> @computer.Category.PricePerHour.ToString("N0") VNĐ/giờ<br>
+                                            <strong>Trạng thái:</strong>
+                                            @if (computer.Status == ComputerStatus.Available)
+                                            {
+                                                <span class="badge bg-success">Sẵn sàng</span>
+                                            }
+                                            else if (computer.Status == ComputerStatus.InUse)
+                                            {
+                                                <span class="badge bg-danger">Đang sử dụng</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning">Bảo trì</span>
+                                            }
+                                        </p>
+                                        @if (computer.Status == ComputerStatus.Available)
+                                        {
+                                            <form asp-controller="User" asp-action="StartSession" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="computerId" value="@computer.ID" />
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <i class="fas fa-play-circle me-2"></i>Bắt đầu sử dụng
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateUsageTime() {
+            const startTime = new Date('@ViewBag.ActiveSession?.StartTime.ToString("o")');
+            if (startTime) {
+                const now = new Date();
+                const diff = Math.floor((now - startTime) / 1000);
+                const hours = Math.floor(diff / 3600);
+                const minutes = Math.floor((diff % 3600) / 60);
+                const seconds = diff % 60;
+                document.getElementById('usageTime').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const pricePerHour = @ViewBag.ActiveSession?.Computer.Category.PricePerHour ?? 0;
+                const pricePerSecond = pricePerHour / 3600;
+                const cost = diff * pricePerSecond;
+                document.getElementById('currentCost').textContent = 
+                    `${Math.ceil(cost).toLocaleString('vi-VN')} VNĐ`;
+            }
+        }
+
+        if (document.getElementById('usageTime')) {
+            setInterval(updateUsageTime, 1000);
+            updateUsageTime();
+        }
+    </script>
+}

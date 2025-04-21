@@ -7,136 +7,175 @@
 }
 
 <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chi tiết doanh thu ngày @Model.ReportDate.ToString("dd/MM/yyyy")</h1>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Doanh thu sử dụng máy</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalUsageRevenue.ToString("N0") VNĐ</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-desktop fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Doanh thu dịch vụ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalServiceRevenue.ToString("N0") VNĐ</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Doanh thu nạp tiền</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalRecharge.ToString("N0") VNĐ</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Tổng doanh thu</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @((Model.TotalUsageRevenue + Model.TotalServiceRevenue + Model.TotalRecharge).ToString("N0")) VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Chi tiết doanh thu ngày @Model.ReportDate.ToString("dd/MM/yyyy")</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết sử dụng máy</h6>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Doanh thu sử dụng máy
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        @Model.TotalUsageRevenue.ToString("N0") VNĐ
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-desktop fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Doanh thu nạp tiền
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        @Model.TotalRecharge.ToString("N0") VNĐ
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        Doanh thu dịch vụ
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        @Model.TotalServiceRevenue.ToString("N0") VNĐ
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <h6 class="font-weight-bold">Chi tiết sử dụng máy</h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="usageTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Người dùng</th>
+                            <th>Máy</th>
+                            <th>Bắt đầu</th>
+                            <th>Kết thúc</th>
+                            <th>Thời gian</th>
+                            <th>Chi phí</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var session in Model.UsageSessions)
+                        {
                             <tr>
-                                <th>Người dùng</th>
-                                <th>Máy tính</th>
-                                <th>Thời gian bắt đầu</th>
-                                <th>Thời gian kết thúc</th>
-                                <th>Tổng tiền</th>
+                                <td>@session.User?.Username</td>
+                                <td>@session.Computer?.Name</td>
+                                <td>@session.StartTime.ToString("HH:mm:ss")</td>
+                                <td>@session.EndTime?.ToString("HH:mm:ss")</td>
+                                <td>
+                                    @if (session.EndTime.HasValue)
+                                    {
+                                        var duration = session.EndTime.Value - session.StartTime;
+                                        var hours = Math.Floor(duration.TotalHours);
+                                        var minutes = duration.Minutes;
+                                        @($"{hours}:{minutes:D2}")
+                                    }
+                                </td>
+                                <td>@session.TotalCost?.ToString("N0") VNĐ</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var session in usageSessions)
-                            {
-                                <tr>
-                                    <td>@(session.User?.FullName ?? "N/A")</td>
-                                    <td>@(session.Computer?.Name ?? "N/A")</td>
-                                    <td>@session.StartTime.ToString("dd/MM/yyyy HH:mm")</td>
-                                    <td>@(session.EndTime?.ToString("dd/MM/yyyy HH:mm") ?? "Đang sử dụng")</td>
-                                    <td>@(session.TotalCost?.ToString("N0") ?? "0") VNĐ</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
+        </div>
+    </div>
 
-            <div class="mt-4">
-                <h6 class="font-weight-bold">Chi tiết sử dụng dịch vụ</h6>
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết sử dụng dịch vụ</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="serviceTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Người dùng</th>
+                            <th>Dịch vụ</th>
+                            <th>Số lượng</th>
+                            <th>Thời gian</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usage in Model.ServiceUsages)
+                        {
                             <tr>
-                                <th>Người dùng</th>
-                                <th>Dịch vụ</th>
-                                <th>Số lượng</th>
-                                <th>Thời gian</th>
-                                <th>Tổng tiền</th>
+                                <td>@usage.User?.Username</td>
+                                <td>@usage.Service?.Name</td>
+                                <td>@usage.Quantity</td>
+                                <td>@usage.UsageTime.ToString("HH:mm:ss")</td>
+                                <td>@usage.TotalPrice.ToString("N0") VNĐ</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var usage in serviceUsages)
-                            {
-                                <tr>
-                                    <td>@(usage.User?.FullName ?? "N/A")</td>
-                                    <td>@(usage.Service?.Name ?? "N/A")</td>
-                                    <td>@usage.Quantity</td>
-                                    <td>@usage.UsageTime.ToString("dd/MM/yyyy HH:mm")</td>
-                                    <td>@(usage.TotalPrice?.ToString("N0") ?? "0") VNĐ</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" class="btn btn-secondary">
-        <i class="fas fa-arrow-left"></i> Quay lại
-    </a>
-</div> 
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#usageTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                }
+            });
+            $('#serviceTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                }
+            });
+        });
+    </script>
+} 

@@ -1,0 +1,93 @@
+@model IEnumerable<QLPhongNET.Models.RechargeRequest>
+@{
+    ViewData["Title"] = "Quản lý nạp tiền";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Quản lý nạp tiền</h1>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách yêu cầu nạp tiền</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Người dùng</th>
+                            <th>Số tiền</th>
+                            <th>Thời gian yêu cầu</th>
+                            <th>Trạng thái</th>
+                            <th>Thời gian xử lý</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(item.User?.Username ?? "Không xác định")</td>
+                                <td>@item.Amount.ToString("N0") VNĐ</td>
+                                <td>@item.RequestTime.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case RechargeStatus.Pending:
+                                            <span class="badge bg-warning">Chờ duyệt</span>
+                                            break;
+                                        case RechargeStatus.Approved:
+                                            <span class="badge bg-success">Đã duyệt</span>
+                                            break;
+                                        case RechargeStatus.Rejected:
+                                            <span class="badge bg-danger">Đã từ chối</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ProcessedTime.HasValue)
+                                    {
+                                        @item.ProcessedTime.Value.ToString("dd/MM/yyyy HH:mm:ss")
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Status == RechargeStatus.Pending)
+                                    {
+                                        <a href="@Url.Action("ProcessRecharge", new { id = item.ID, approve = true })" 
+                                           class="btn btn-success btn-sm" onclick="return confirm('Bạn có chắc muốn duyệt yêu cầu này?')">
+                                            <i class="fas fa-check"></i>
+                                        </a>
+                                        <a href="@Url.Action("ProcessRecharge", new { id = item.ID, approve = false })" 
+                                           class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn từ chối yêu cầu này?')">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[2, 'desc']]
+            });
+        });
+    </script>
+} 

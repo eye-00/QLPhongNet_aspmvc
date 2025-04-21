@@ -1,0 +1,57 @@
+@model IEnumerable<QLPhongNET.Models.Notification>
+@{
+    ViewData["Title"] = "Thông báo";
+}
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Thông báo</h4>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                @foreach (var item in Model)
+                {
+                    <div class="list-group-item list-group-item-action @(!item.IsRead ? "active" : "")">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@item.Title</h5>
+                            <small>@item.CreatedTime.ToString("dd/MM/yyyy HH:mm")</small>
+                        </div>
+                        <p class="mb-1">@item.Content</p>
+                        @if (!string.IsNullOrEmpty(item.Link))
+                        {
+                            <a href="@item.Link" class="btn btn-sm btn-primary mt-2">
+                                <i class="fas fa-external-link-alt"></i> Xem chi tiết
+                            </a>
+                        }
+                        @if (!item.IsRead)
+                        {
+                            <form asp-action="MarkAsRead" asp-route-id="@item.ID" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-secondary mt-2">
+                                    <i class="fas fa-check"></i> Đánh dấu đã đọc
+                                </button>
+                            </form>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Cập nhật số thông báo chưa đọc mỗi 30 giây
+        setInterval(function() {
+            $.get('/Notification/GetUnreadCount', function(count) {
+                $('#notificationCount').text(count);
+                if (count > 0) {
+                    $('#notificationCount').removeClass('d-none');
+                } else {
+                    $('#notificationCount').addClass('d-none');
+                }
+            });
+        }, 30000);
+    </script>
+} 

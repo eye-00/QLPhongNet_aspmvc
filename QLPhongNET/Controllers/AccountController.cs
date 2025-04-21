@@ -28,37 +28,24 @@ namespace QLPhongNET.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string username, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin đăng nhập");
-                return View();
-            }
-
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
 
-            if (user == null)
+            if (user != null)
             {
-                ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng");
-                return View();
+                HttpContext.Session.SetString("Username", user.Username);
+                HttpContext.Session.SetString("Role", user.Role.ToString());
+                HttpContext.Session.SetInt32("UserID", user.ID);
+
+                if (user.Role == UserRole.Admin)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                return RedirectToAction("Index", "Home");
             }
 
-            // Lưu thông tin user vào session
-            HttpContext.Session.SetInt32("UserID", user.ID);
-            HttpContext.Session.SetString("Username", user.Username);
-            HttpContext.Session.SetString("Role", user.Role.ToString());
-            HttpContext.Session.SetString("FullName", user.FullName);
-
-            _logger.LogInformation($"User {username} đăng nhập thành công");
-
-            if (user.Role == UserRole.Admin)
-            {
-                return RedirectToAction("Index", "Admin");
-            }
-            else
-            {
-                return RedirectToAction("Index", "User");
-            }
+            ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng");
+            return View();
         }
 
         // GET: Account/Logout

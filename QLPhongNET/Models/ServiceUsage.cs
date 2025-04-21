@@ -11,6 +11,7 @@ namespace QLPhongNET.Models
             Quantity = 1;
         }
 
+        [Key]
         public int ID { get; set; }
 
         [Required]
@@ -19,8 +20,6 @@ namespace QLPhongNET.Models
         [Required]
         public int ServiceID { get; set; }
 
-        public int? DailyRevenueID { get; set; }
-
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Số lượng phải lớn hơn 0")]
         public int Quantity { get; set; }
@@ -28,7 +27,11 @@ namespace QLPhongNET.Models
         [Required]
         public DateTime UsageTime { get; set; }
 
-        public decimal? TotalPrice { get; set; }
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Tổng tiền phải lớn hơn hoặc bằng 0")]
+        public decimal TotalPrice { get; set; }
+
+        public int? DailyRevenueID { get; set; }
 
         [ForeignKey("UserID")]
         public virtual User? User { get; set; }

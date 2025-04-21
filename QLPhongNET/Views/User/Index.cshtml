@@ -6,124 +6,83 @@
     var services = ViewBag.Services as IEnumerable<QLPhongNET.Models.Service>;
 }
 
-<div class="container-fluid">
+<div class="container mt-4">
     <div class="row">
-        <!-- Thông tin người dùng -->
-        <div class="col-md-3">
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Thông tin người dùng</h5>
-                    <p class="card-text">
-                        <strong>Tên đăng nhập:</strong> @currentUser.Username<br />
-                        <strong>Họ tên:</strong> @currentUser.FullName<br />
-                        <strong>Vai trò:</strong> 
-                        @if (currentUser.Role == QLPhongNET.Models.UserRole.Admin)
-                        {
-                            <span class="badge bg-danger">Admin</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-primary">User</span>
-                        }
-                        <br />
-                        <strong>Số dư:</strong> @currentUser.Balance.ToString("N0") VNĐ
-                    </p>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Thông tin người dùng</h5>
                 </div>
-            </div>
-
-            @if (currentSession != null)
-            {
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Phiên đang sử dụng</h5>
-                        <p class="card-text">
-                            <strong>Máy:</strong> @currentSession.Computer.Name<br />
-                            <strong>Bắt đầu:</strong> @currentSession.StartTime.ToString("HH:mm:ss")<br />
-                            <strong>Thời gian:</strong> <span id="usageTime"></span><br />
-                            <strong>Chi phí:</strong> <span id="currentCost"></span> VNĐ
-                        </p>
-                        <form asp-action="EndSession" method="post">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="sessionId" value="@currentSession.ID" />
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-stop-circle"></i> Kết thúc
-                            </button>
-                        </form>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Tên đăng nhập:</strong> @User.Identity?.Name</p>
+                            <p><strong>Số dư:</strong> @ViewBag.Balance?.ToString("N0") VNĐ</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Phiên sử dụng hiện tại:</strong></p>
+                            @if (ViewBag.CurrentSession != null)
+                            {
+                                <p>Máy: @ViewBag.CurrentSession.Computer?.Name</p>
+                                <p>Bắt đầu: @ViewBag.CurrentSession.StartTime.ToString("dd/MM/yyyy HH:mm:ss")</p>
+                                <p>Thời gian sử dụng: <span id="usageTime">0:00:00</span></p>
+                                <p>Chi phí hiện tại: <span id="currentCost">0</span> VNĐ</p>
+                                <a href="@Url.Action("EndSession", "User", new { sessionId = ViewBag.CurrentSession.ID })" 
+                                   class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn kết thúc phiên sử dụng?')">
+                                    Kết thúc phiên
+                                </a>
+                            }
+                            else
+                            {
+                                <p>Không có phiên sử dụng nào</p>
+                            }
+                        </div>
                     </div>
                 </div>
-            }
+            </div>
         </div>
+    </div>
 
-        <!-- Danh sách máy tính -->
-        <div class="col-md-6">
-            <div class="card shadow-sm">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Danh sách máy tính</h5>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">Danh sách máy tính</h5>
                     <div class="row">
-                        @foreach (var item in Model)
+                        @foreach (var computer in Model)
                         {
-                            <div class="col-md-4 mb-3">
-                                <div class="card h-100 shadow-sm">
+                            <div class="col-md-3 mb-4">
+                                <div class="card h-100">
                                     <div class="card-body">
-                                        <h6 class="card-title">@item.Name</h6>
+                                        <h5 class="card-title">@computer.Name</h5>
                                         <p class="card-text">
-                                            @switch (item.Status)
+                                            <strong>Loại:</strong> @computer.Category?.Name<br>
+                                            <strong>Giá:</strong> @computer.Category?.PricePerHour.ToString("N0") VNĐ/giờ<br>
+                                            <strong>Trạng thái:</strong>
+                                            @switch (computer.Status)
                                             {
-                                                case QLPhongNET.Models.ComputerStatus.Available:
+                                                case ComputerStatus.Available:
                                                     <span class="badge bg-success">Sẵn sàng</span>
                                                     break;
-                                                case QLPhongNET.Models.ComputerStatus.InUse:
-                                                    <span class="badge bg-warning">Đang sử dụng</span>
+                                                case ComputerStatus.InUse:
+                                                    <span class="badge bg-danger">Đang sử dụng</span>
                                                     break;
-                                                case QLPhongNET.Models.ComputerStatus.Maintenance:
-                                                    <span class="badge bg-danger">Bảo trì</span>
+                                                case ComputerStatus.Maintenance:
+                                                    <span class="badge bg-warning">Bảo trì</span>
                                                     break;
                                             }
-                                            <br />
-                                            <small>Giá: @item.Category.PricePerHour.ToString("N0") VNĐ/giờ</small>
                                         </p>
-                                        @if (item.Status == QLPhongNET.Models.ComputerStatus.Available && currentSession == null)
+                                        @if (computer.Status == ComputerStatus.Available)
                                         {
-                                            <form asp-action="StartSession" method="post">
-                                                @Html.AntiForgeryToken()
-                                                <input type="hidden" name="computerId" value="@item.ID" />
-                                                <button type="submit" class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-play-circle"></i> Sử dụng
-                                                </button>
-                                            </form>
+                                            <a href="@Url.Action("StartSession", "User", new { computerId = computer.ID })" 
+                                               class="btn btn-primary" onclick="return confirm('Bạn có chắc muốn bắt đầu sử dụng máy này?')">
+                                                Bắt đầu sử dụng
+                                            </a>
                                         }
                                     </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dịch vụ -->
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Dịch vụ</h5>
-                    <div class="list-group">
-                        @foreach (var service in services)
-                        {
-                            <div class="list-group-item">
-                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                    <h6 class="mb-1">@service.Name</h6>
-                                    <small>@service.Price.ToString("N0") VNĐ</small>
-                                </div>
-                                <form asp-action="PurchaseService" method="post" class="mt-2">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="serviceId" value="@service.ID" />
-                                    <div class="input-group">
-                                        <input type="number" name="quantity" class="form-control form-control-sm" value="1" min="1" />
-                                        <button type="submit" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </button>
-                                    </div>
-                                </form>
                             </div>
                         }
                     </div>
@@ -136,29 +95,25 @@
 @section Scripts {
     <script>
         function updateUsageTime() {
-            const startTime = new Date('@currentSession?.StartTime.ToString("yyyy-MM-ddTHH:mm:ss")');
-            const now = new Date();
-            const diff = now - startTime;
-            
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('usageTime').textContent = 
-                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            // Tính chi phí
-            const hourlyRate = @(currentSession?.Computer.Category.PricePerHour ?? 0);
-            const cost = (diff / (1000 * 60 * 60)) * hourlyRate;
-            document.getElementById('currentCost').textContent = cost.toLocaleString('vi-VN');
+            const startTime = new Date('@ViewBag.CurrentSession?.StartTime.ToString("o")');
+            if (startTime) {
+                const now = new Date();
+                const diff = Math.floor((now - startTime) / 1000);
+                const hours = Math.floor(diff / 3600);
+                const minutes = Math.floor((diff % 3600) / 60);
+                const seconds = diff % 60;
+                document.getElementById('usageTime').textContent = 
+                    `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const pricePerHour = @ViewBag.CurrentSession?.Computer?.Category?.PricePerHour ?? 0;
+                const currentCost = Math.ceil(diff / 3600) * pricePerHour;
+                document.getElementById('currentCost').textContent = currentCost.toLocaleString('vi-VN');
+            }
         }
 
-        @if (currentSession != null)
-        {
-            <text>
-            updateUsageTime();
+        if (document.getElementById('usageTime')) {
             setInterval(updateUsageTime, 1000);
-            </text>
+            updateUsageTime();
         }
     </script>
 } 

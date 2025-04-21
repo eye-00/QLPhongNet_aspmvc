@@ -1,0 +1,73 @@
+@model IEnumerable<QLPhongNET.Models.RechargeRequest>
+@{
+    ViewData["Title"] = "Lịch sử nạp tiền";
+}
+
+<div class="container">
+    <h2 class="mb-4">Lịch sử nạp tiền</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Số tiền</th>
+                            <th>Thời gian yêu cầu</th>
+                            <th>Trạng thái</th>
+                            <th>Thời gian xử lý</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Amount.ToString("N0") VNĐ</td>
+                                <td>@item.RequestTime.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case RechargeStatus.Pending:
+                                            <span class="badge bg-warning">Chờ duyệt</span>
+                                            break;
+                                        case RechargeStatus.Approved:
+                                            <span class="badge bg-success">Đã duyệt</span>
+                                            break;
+                                        case RechargeStatus.Rejected:
+                                            <span class="badge bg-danger">Đã từ chối</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ProcessedTime.HasValue)
+                                    {
+                                        @item.ProcessedTime.Value.ToString("dd/MM/yyyy HH:mm:ss")
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+                                <td>@(item.Note ?? "-")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#historyTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[1, 'desc']]
+            });
+        });
+    </script>
+} 
