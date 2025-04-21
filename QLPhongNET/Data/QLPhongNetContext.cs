@@ -34,7 +34,7 @@ namespace QLPhongNET.Data
                 entity.ToTable("Computers");
                 entity.HasKey(e => e.ID);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(30);
-                entity.Property(e => e.Status).IsRequired().HasConversion<string>();
+                entity.Property(e => e.Status).IsRequired();
                 entity.Property(e => e.CatID).IsRequired();
                 
                 entity.HasOne(e => e.Category)
@@ -59,9 +59,10 @@ namespace QLPhongNET.Data
                 entity.HasKey(e => e.ID);
                 entity.Property(e => e.Username).IsRequired().HasMaxLength(30);
                 entity.Property(e => e.Password).IsRequired().HasMaxLength(30);
-                entity.Property(e => e.FullName).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.Phone).IsRequired().HasMaxLength(15);
-                entity.Property(e => e.Role).IsRequired().HasMaxLength(10).HasConversion<string>();
+                entity.Property(e => e.FullName).HasMaxLength(50);
+                entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.Balance).HasDefaultValue(0);
+                entity.Property(e => e.Role).IsRequired();
             });
 
             // UsageSession
@@ -78,8 +79,13 @@ namespace QLPhongNET.Data
                     .OnDelete(DeleteBehavior.Restrict);
                 
                 entity.HasOne(e => e.Computer)
-                    .WithMany(c => c.UsageSessions)
+                    .WithMany()
                     .HasForeignKey(e => e.ComputerID)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.DailyRevenue)
+                    .WithMany()
+                    .HasForeignKey(e => e.DailyRevenueID)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -97,7 +103,7 @@ namespace QLPhongNET.Data
             {
                 entity.ToTable("ServiceUsage");
                 entity.HasKey(e => e.ID);
-                entity.Property(e => e.Quantity).IsRequired();
+                entity.Property(e => e.Quantity).HasDefaultValue(1);
                 entity.Property(e => e.UsageTime).IsRequired();
                 entity.Property(e => e.TotalPrice).HasPrecision(15, 2);
                 
@@ -107,8 +113,13 @@ namespace QLPhongNET.Data
                     .OnDelete(DeleteBehavior.Restrict);
                 
                 entity.HasOne(e => e.Service)
-                    .WithMany(s => s.ServiceUsages)
+                    .WithMany()
                     .HasForeignKey(e => e.ServiceID)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.DailyRevenue)
+                    .WithMany()
+                    .HasForeignKey(e => e.DailyRevenueID)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -161,6 +172,14 @@ namespace QLPhongNET.Data
                 .WithOne(su => su.DailyRevenue)
                 .HasForeignKey(su => su.DailyRevenueID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Cấu hình chuyển đổi cho ComputerStatus
+            modelBuilder.Entity<Computer>()
+                .Property(e => e.Status)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (ComputerStatus)Enum.Parse(typeof(ComputerStatus), v)
+                );
         }
     }
 }

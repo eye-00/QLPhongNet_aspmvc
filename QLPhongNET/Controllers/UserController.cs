@@ -195,7 +195,7 @@ namespace QLPhongNET.Controllers
         // POST: User/StartSession
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult StartSession(int computerId)
+        public async Task<IActionResult> StartSession(int computerId)
         {
             var username = HttpContext.Session.GetString("Username");
             if (string.IsNullOrEmpty(username))
@@ -203,15 +203,15 @@ namespace QLPhongNET.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            var computer = _context.Computers
+            var computer = await _context.Computers
                 .Include(c => c.Category)
-                .FirstOrDefault(c => c.ID == computerId);
+                .FirstOrDefaultAsync(c => c.ID == computerId);
 
             if (computer == null || computer.Status != ComputerStatus.Available)
             {
@@ -219,8 +219,8 @@ namespace QLPhongNET.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var currentSession = _context.UsageSessions
-                .FirstOrDefault(s => s.UserID == user.ID && s.EndTime == null);
+            var currentSession = await _context.UsageSessions
+                .FirstOrDefaultAsync(s => s.UserID == user.ID && s.EndTime == null);
 
             if (currentSession != null)
             {
@@ -237,7 +237,7 @@ namespace QLPhongNET.Controllers
 
             computer.Status = ComputerStatus.InUse;
             _context.UsageSessions.Add(session);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
@@ -294,20 +294,20 @@ namespace QLPhongNET.Controllers
                 dailyRevenue = new DailyRevenue
                 {
                     ReportDate = today,
-                    TotalUsageRevenue = session.TotalCost.Value,
+                    TotalUsageRevenue = 0,
                     TotalRecharge = 0,
                     TotalServiceRevenue = 0
                 };
                 _context.DailyRevenues.Add(dailyRevenue);
+                await _context.SaveChangesAsync(); // Lưu để lấy ID
             }
-            else
-            {
-                dailyRevenue.TotalUsageRevenue += session.TotalCost.Value;
-            }
+
+            dailyRevenue.TotalUsageRevenue += session.TotalCost.Value;
+            session.DailyRevenueID = dailyRevenue.ID;
 
             await _context.SaveChangesAsync();
+            TempData["Success"] = $"Đã kết thúc phiên sử dụng. Chi phí: {session.TotalCost.Value:N0} VNĐ";
 
-            TempData["Success"] = $"Phiên sử dụng đã kết thúc. Chi phí: {session.TotalCost.Value:N0} VNĐ";
             return RedirectToAction(nameof(Index));
         }
     }

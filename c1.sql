@@ -81,6 +81,6 @@ INSERT INTO Computers(Name, CatID) VALUES
 ('Máy VIP 2', 2);
 
 INSERT INTO User(Username, Password, FullName, Phone, Balance, Role) VALUES
-('user1', '123456', 'Nguyen Van A', '0912345678', 50000, 'User'),
-('user2', '123456', 'Nguyen Thi B', '0987654321', 200000, 'User'),
-('admin1', 'Admin1234456', 'Tran Thi C', '0123123123', 0, 'Admin');
+('user1', '123456', 'Nguyen Van A', '0912345678', 50000, 0),
+('user2', '123456', 'Nguyen Thi B', '0987654321', 200000, 0),
+('admin1', 'Admin1234456', 'Tran Thi C', '0123123123', 0, 1);
