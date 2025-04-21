@@ -4,12 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLPhongNET.Models
 {
+    public enum ComputerStatus
+    {
+        Available,
+        [Display(Name = "In Use")]
+        InUse,
+        Maintenance
+    }
+
     public class Computer
     {
         public Computer()
         {
             Name = string.Empty;
-            Status = "Available";
+            Status = ComputerStatus.Available;
             UsageSessions = new HashSet<UsageSession>();
         }
 
@@ -23,7 +31,7 @@ namespace QLPhongNET.Models
 
         [Required(ErrorMessage = "Vui lòng chọn trạng thái")]
         [Display(Name = "Trạng thái")]
-        public string Status { get; set; }
+        public ComputerStatus Status { get; set; }
 
         [Required(ErrorMessage = "Vui lòng chọn loại máy")]
         [Display(Name = "Loại máy")]

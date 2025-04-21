@@ -1,0 +1,155 @@
+@{
+    ViewData["Title"] = "Thống kê doanh thu";
+    var dailyRevenue = ViewBag.DailyRevenue as DailyRevenue;
+    var weeklyRevenue = ViewBag.WeeklyRevenue as List<dynamic> ?? new List<dynamic>();
+    var monthlyRevenue = ViewBag.MonthlyRevenue as List<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">@ViewData["Title"]</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">Doanh thu hôm nay</h5>
+                                    <h3 class="mb-0">@((dailyRevenue?.TotalUsageRevenue ?? 0 + dailyRevenue?.TotalRecharge ?? 0 + dailyRevenue?.TotalServiceRevenue ?? 0).ToString("N0")) VNĐ</h3>
+                                    <small>@(dailyRevenue?.ReportDate.ToString("dd/MM/yyyy") ?? DateTime.Now.ToString("dd/MM/yyyy"))</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-info text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">Doanh thu tuần này</h5>
+                                    <h3 class="mb-0">@(weeklyRevenue.Any() ? weeklyRevenue.Sum(w => w.TotalRevenue).ToString("N0") : "0") VNĐ</h3>
+                                    <small>
+                                        @if (weeklyRevenue.Any())
+                                        {
+                                            @($"Từ {weeklyRevenue.First().Date.ToString("dd/MM/yyyy")} đến {weeklyRevenue.Last().Date.ToString("dd/MM/yyyy")}")
+                                        }
+                                        else
+                                        {
+                                            @("Chưa có dữ liệu")
+                                        }
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">Doanh thu tháng này</h5>
+                                    <h3 class="mb-0">@(monthlyRevenue.Any() ? monthlyRevenue.Sum(m => m.TotalRevenue).ToString("N0") : "0") VNĐ</h3>
+                                    <small>
+                                        @if (monthlyRevenue.Any())
+                                        {
+                                            @($"Từ {monthlyRevenue.First().Date.ToString("dd/MM/yyyy")} đến {monthlyRevenue.Last().Date.ToString("dd/MM/yyyy")}")
+                                        }
+                                        else
+                                        {
+                                            @("Chưa có dữ liệu")
+                                        }
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Chi tiết doanh thu hôm nay</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Doanh thu sử dụng máy:</th>
+                                <td class="text-end">@(dailyRevenue?.TotalUsageRevenue.ToString("N0") ?? "0") VNĐ</td>
+                            </tr>
+                            <tr>
+                                <th>Doanh thu nạp tiền:</th>
+                                <td class="text-end">@(dailyRevenue?.TotalRecharge.ToString("N0") ?? "0") VNĐ</td>
+                            </tr>
+                            <tr>
+                                <th>Doanh thu dịch vụ:</th>
+                                <td class="text-end">@(dailyRevenue?.TotalServiceRevenue.ToString("N0") ?? "0") VNĐ</td>
+                            </tr>
+                            <tr class="table-primary">
+                                <th>Tổng doanh thu:</th>
+                                <td class="text-end fw-bold">@((dailyRevenue?.TotalUsageRevenue ?? 0 + dailyRevenue?.TotalRecharge ?? 0 + dailyRevenue?.TotalServiceRevenue ?? 0).ToString("N0")) VNĐ</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="text-end mt-3">
+                        <a asp-action="Details" asp-route-date="@(dailyRevenue?.ReportDate.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd"))" class="btn btn-primary">
+                            <i class="fas fa-chart-bar"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">Biểu đồ doanh thu</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const weeklyData = @Html.Raw(Json.Serialize(weeklyRevenue));
+        const monthlyData = @Html.Raw(Json.Serialize(monthlyRevenue));
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: weeklyData.map(d => new Date(d.date).toLocaleDateString('vi-VN')),
+                datasets: [{
+                    label: 'Doanh thu theo ngày',
+                    data: weeklyData.map(d => d.totalRevenue),
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ doanh thu tuần này'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString('vi-VN') + ' VNĐ';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+} 

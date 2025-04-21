@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLPhongNET.Data;
 using QLPhongNET.Models;
+using System.Diagnostics;
 
 namespace QLPhongNET.Controllers
 {
     public class AccountController : Controller
     {
         private readonly QLPhongNetContext _context;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(QLPhongNetContext context)
+        public AccountController(QLPhongNetContext context, ILogger<AccountController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Account/Login
@@ -27,11 +30,13 @@ namespace QLPhongNET.Controllers
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin");
+                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin đăng nhập");
                 return View();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+
             if (user == null)
             {
                 ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng");
@@ -39,18 +44,20 @@ namespace QLPhongNET.Controllers
             }
 
             // Lưu thông tin user vào session
-            HttpContext.Session.SetString("UserID", user.ID.ToString());
+            HttpContext.Session.SetInt32("UserID", user.ID);
             HttpContext.Session.SetString("Username", user.Username);
-            HttpContext.Session.SetString("Role", user.Role);
+            HttpContext.Session.SetString("Role", user.Role.ToString());
+            HttpContext.Session.SetString("FullName", user.FullName);
 
-            if (user.Role == "Admin")
+            _logger.LogInformation($"User {username} đăng nhập thành công");
+
+            if (user.Role == UserRole.Admin)
             {
                 return RedirectToAction("Index", "Admin");
             }
             else
             {
-                // Tạm thời chuyển về trang chủ cho user thường
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "User");
             }
         }
 

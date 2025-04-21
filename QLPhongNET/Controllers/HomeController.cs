@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QLPhongNET.Models;
 using QLPhongNET.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace QLPhongNET.Controllers
 {
@@ -20,7 +21,34 @@ namespace QLPhongNET.Controllers
         // Trang chính
         public IActionResult Index()
         {
-            return View();
+            var username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            var currentSession = _context.UsageSessions
+                .Include(s => s.Computer)
+                    .ThenInclude(c => c.Category)
+                .FirstOrDefault(s => s.UserID == user.ID && s.EndTime == null);
+
+            var computers = _context.Computers
+                .Include(c => c.Category)
+                .ToList();
+
+            var services = _context.Services.ToList();
+
+            ViewBag.CurrentUser = user;
+            ViewBag.CurrentSession = currentSession;
+            ViewBag.Services = services;
+
+            return View(computers);
         }
 
         // Trang tổng quan (Admin)

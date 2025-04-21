@@ -1,39 +1,54 @@
 ﻿@model QLPhongNET.Models.Computer
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xóa máy tính";
 }
 
-<h1>Delete</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h3 class="card-title mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                Bạn có chắc chắn muốn xóa máy tính này?
+            </div>
+            <dl class="row">
+                <dt class="col-sm-3">Tên máy:</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Computer</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.ID)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                <dt class="col-sm-3">Loại máy:</dt>
+                <dd class="col-sm-9">@(Model.Category?.Name ?? "N/A")</dd>
+
+                <dt class="col-sm-3">Giá/giờ:</dt>
+                <dd class="col-sm-9">@(Model.Category?.PricePerHour.ToString("N0") ?? "0") VNĐ</dd>
+
+                <dt class="col-sm-3">Trạng thái:</dt>
+                <dd class="col-sm-9">
+                    @switch (Model.Status)
+                    {
+                        case QLPhongNET.Models.ComputerStatus.Available:
+                            <span class="badge bg-success">Sẵn sàng</span>
+                            break;
+                        case QLPhongNET.Models.ComputerStatus.InUse:
+                            <span class="badge bg-warning">Đang sử dụng</span>
+                            break;
+                        case QLPhongNET.Models.ComputerStatus.Maintenance:
+                            <span class="badge bg-danger">Bảo trì</span>
+                            break;
+                    }
+                </dd>
+            </dl>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="ID" />
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Xóa
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+            </form>
+        </div>
+    </div>
 </div>

@@ -1,47 +1,66 @@
 ﻿@model IEnumerable<QLPhongNET.Models.Computer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý máy tính";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.ID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">@ViewData["Title"]</h3>
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus"></i> Thêm máy tính mới
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tên máy</th>
+                            <th>Loại máy</th>
+                            <th>Giá/giờ</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@(item.Category?.Name ?? "N/A")</td>
+                                <td>@(item.Category?.PricePerHour.ToString("N0") ?? "0") VNĐ</td>
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case QLPhongNET.Models.ComputerStatus.Available:
+                                            <span class="badge bg-success">Sẵn sàng</span>
+                                            break;
+                                        case QLPhongNET.Models.ComputerStatus.InUse:
+                                            <span class="badge bg-warning">Đang sử dụng</span>
+                                            break;
+                                        case QLPhongNET.Models.ComputerStatus.Maintenance:
+                                            <span class="badge bg-danger">Bảo trì</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-info btn-sm">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

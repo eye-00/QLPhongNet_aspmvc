@@ -1,59 +1,56 @@
 ﻿@model IEnumerable<QLPhongNET.Models.UsageSession>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách phiên sử dụng";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Computer)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Computer.ID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Người dùng</th>
+                            <th>Máy tính</th>
+                            <th>Loại máy</th>
+                            <th>Giá/giờ</th>
+                            <th>Thời gian bắt đầu</th>
+                            <th>Thời gian kết thúc</th>
+                            <th>Tổng chi phí</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(item.User?.FullName ?? "N/A")</td>
+                                <td>@(item.Computer?.Name ?? "N/A")</td>
+                                <td>@(item.Computer?.Category?.Name ?? "N/A")</td>
+                                <td>@(item.Computer?.Category?.PricePerHour.ToString("N0") ?? "0") VNĐ</td>
+                                <td>@item.StartTime.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td>@(item.EndTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Đang sử dụng")</td>
+                                <td>@(item.TotalCost?.ToString("N0") ?? "0") VNĐ</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-info btn-sm">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

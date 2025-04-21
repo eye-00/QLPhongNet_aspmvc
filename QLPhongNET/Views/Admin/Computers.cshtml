@@ -51,13 +51,13 @@
                                 <td>
                                     @switch (item.Status)
                                     {
-                                        case "Available":
+                                        case QLPhongNET.Models.ComputerStatus.Available:
                                             <span class="badge badge-success">Sẵn sàng</span>
                                             break;
-                                        case "In Use":
+                                        case QLPhongNET.Models.ComputerStatus.InUse:
                                             <span class="badge badge-warning">Đang sử dụng</span>
                                             break;
-                                        case "Maintenance":
+                                        case QLPhongNET.Models.ComputerStatus.Maintenance:
                                             <span class="badge badge-danger">Bảo trì</span>
                                             break;
                                     }

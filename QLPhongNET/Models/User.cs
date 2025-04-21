@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QLPhongNET.Models
 {
+    public enum UserRole
+    {
+        User,
+        Admin
+    }
+
     public class User
     {
         public User()
@@ -11,7 +17,7 @@ namespace QLPhongNET.Models
             Password = string.Empty;
             FullName = string.Empty;
             Phone = string.Empty;
-            Role = "User";
+            Role = UserRole.User;
             Balance = 0;
             UsageSessions = new HashSet<UsageSession>();
             ServiceUsages = new HashSet<ServiceUsage>();
@@ -38,7 +44,7 @@ namespace QLPhongNET.Models
         public decimal Balance { get; set; }
 
         [Required(ErrorMessage = "Vui lòng chọn vai trò")]
-        public string Role { get; set; }
+        public UserRole Role { get; set; }
 
         public virtual ICollection<UsageSession> UsageSessions { get; set; }
         public virtual ICollection<ServiceUsage> ServiceUsages { get; set; }

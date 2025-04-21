@@ -18,6 +18,8 @@ namespace QLPhongNET.Models
         [Required]
         public int ComputerID { get; set; }
 
+        public int? DailyRevenueID { get; set; }
+
         [Required]
         public DateTime StartTime { get; set; }
 
@@ -30,5 +32,8 @@ namespace QLPhongNET.Models
 
         [ForeignKey("ComputerID")]
         public virtual Computer? Computer { get; set; }
+
+        [ForeignKey("DailyRevenueID")]
+        public virtual DailyRevenue? DailyRevenue { get; set; }
     }
 }

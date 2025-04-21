@@ -1,36 +1,49 @@
 ﻿@model QLPhongNET.Models.Computer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết máy tính";
 }
 
-<h1>Details</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Tên máy:</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
 
-<div>
-    <h4>Computer</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.ID)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                <dt class="col-sm-3">Loại máy:</dt>
+                <dd class="col-sm-9">@(Model.Category?.Name ?? "N/A")</dd>
+
+                <dt class="col-sm-3">Giá/giờ:</dt>
+                <dd class="col-sm-9">@(Model.Category?.PricePerHour.ToString("N0") ?? "0") VNĐ</dd>
+
+                <dt class="col-sm-3">Trạng thái:</dt>
+                <dd class="col-sm-9">
+                    @switch (Model.Status)
+                    {
+                        case QLPhongNET.Models.ComputerStatus.Available:
+                            <span class="badge bg-success">Sẵn sàng</span>
+                            break;
+                        case QLPhongNET.Models.ComputerStatus.InUse:
+                            <span class="badge bg-warning">Đang sử dụng</span>
+                            break;
+                        case QLPhongNET.Models.ComputerStatus.Maintenance:
+                            <span class="badge bg-danger">Bảo trì</span>
+                            break;
+                    }
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
+        </div>
+    </div>
 </div>

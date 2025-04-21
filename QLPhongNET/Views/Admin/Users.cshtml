@@ -38,13 +38,13 @@
                                 <td>@item.Phone</td>
                                 <td>@item.Balance.ToString("N0") VNĐ</td>
                                 <td>
-                                    @if (item.Role == "Admin")
+                                    @if (item.Role == QLPhongNET.Models.UserRole.Admin)
                                     {
-                                        <span class="badge badge-primary">Admin</span>
+                                        <span class="badge badge-primary">Quản trị viên</span>
                                     }
                                     else
                                     {
-                                        <span class="badge badge-secondary">User</span>
+                                        <span class="badge badge-secondary">Người dùng</span>
                                     }
                                 </td>
                                 <td>

@@ -19,6 +19,8 @@ namespace QLPhongNET.Models
         [Required]
         public int ServiceID { get; set; }
 
+        public int? DailyRevenueID { get; set; }
+
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Số lượng phải lớn hơn 0")]
         public int Quantity { get; set; }
@@ -33,5 +35,8 @@ namespace QLPhongNET.Models
 
         [ForeignKey("ServiceID")]
         public virtual Service? Service { get; set; }
+
+        [ForeignKey("DailyRevenueID")]
+        public virtual DailyRevenue? DailyRevenue { get; set; }
     }
 }

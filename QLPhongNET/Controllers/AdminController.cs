@@ -20,8 +20,8 @@ namespace QLPhongNET.Controllers
 
         private bool IsAdmin()
         {
-            var role = HttpContext.Session.GetString("Role");
-            return role == "Admin";
+            var roleStr = HttpContext.Session.GetString("Role");
+            return roleStr == UserRole.Admin.ToString();
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -39,8 +39,8 @@ namespace QLPhongNET.Controllers
         {
             ViewBag.TotalUsers = await _context.Users.CountAsync();
             ViewBag.TotalComputers = await _context.Computers.CountAsync();
-            ViewBag.ComputersInUse = await _context.Computers.CountAsync(c => c.Status == "In Use");
-            ViewBag.ComputersMaintenance = await _context.Computers.CountAsync(c => c.Status == "Maintenance");
+            ViewBag.ComputersInUse = await _context.Computers.CountAsync(c => c.Status == ComputerStatus.InUse);
+            ViewBag.ComputersMaintenance = await _context.Computers.CountAsync(c => c.Status == ComputerStatus.Maintenance);
             return View();
         }
 
@@ -148,10 +148,7 @@ namespace QLPhongNET.Controllers
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(computer.Status))
-                    {
-                        computer.Status = "Available";
-                    }
+                    computer.Status = ComputerStatus.Available;
                     
                     _logger.LogInformation("Thêm máy tính vào context: {Name}, Status: {Status}, CatID: {CatID}", 
                         computer.Name, computer.Status, computer.CatID);
