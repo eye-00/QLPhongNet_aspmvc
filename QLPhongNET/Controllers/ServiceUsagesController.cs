@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLPhongNET.Data;
 using QLPhongNET.Models;
 
 namespace QLPhongNET.Controllers
@@ -21,8 +22,11 @@ namespace QLPhongNET.Controllers
         // GET: ServiceUsages
         public async Task<IActionResult> Index()
         {
-            var qLPhongNetContext = _context.ServiceUsages.Include(s => s.Service).Include(s => s.User);
-            return View(await qLPhongNetContext.ToListAsync());
+            var serviceUsages = await _context.ServiceUsages
+                .Include(s => s.Service)
+                .Include(s => s.User)
+                .ToListAsync();
+            return View(serviceUsages);
         }
 
         // GET: ServiceUsages/Details/5
@@ -49,7 +53,7 @@ namespace QLPhongNET.Controllers
         public IActionResult Create()
         {
             ViewData["ServiceID"] = new SelectList(_context.Services, "ID", "Name");
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password");
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username");
             return View();
         }
 
@@ -67,7 +71,7 @@ namespace QLPhongNET.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ServiceID"] = new SelectList(_context.Services, "ID", "Name", serviceUsage.ServiceID);
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password", serviceUsage.UserID);
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username", serviceUsage.UserID);
             return View(serviceUsage);
         }
 
@@ -85,7 +89,7 @@ namespace QLPhongNET.Controllers
                 return NotFound();
             }
             ViewData["ServiceID"] = new SelectList(_context.Services, "ID", "Name", serviceUsage.ServiceID);
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password", serviceUsage.UserID);
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username", serviceUsage.UserID);
             return View(serviceUsage);
         }
 
@@ -122,7 +126,7 @@ namespace QLPhongNET.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ServiceID"] = new SelectList(_context.Services, "ID", "Name", serviceUsage.ServiceID);
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password", serviceUsage.UserID);
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username", serviceUsage.UserID);
             return View(serviceUsage);
         }
 

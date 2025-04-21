@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLPhongNET.Data;
 using QLPhongNET.Models;
 
 namespace QLPhongNET.Controllers
@@ -21,8 +22,11 @@ namespace QLPhongNET.Controllers
         // GET: UsageSessions
         public async Task<IActionResult> Index()
         {
-            var qLPhongNetContext = _context.UsageSessions.Include(u => u.Computer).Include(u => u.User);
-            return View(await qLPhongNetContext.ToListAsync());
+            var usageSessions = await _context.UsageSessions
+                .Include(u => u.Computer)
+                .Include(u => u.User)
+                .ToListAsync();
+            return View(usageSessions);
         }
 
         // GET: UsageSessions/Details/5
@@ -48,8 +52,8 @@ namespace QLPhongNET.Controllers
         // GET: UsageSessions/Create
         public IActionResult Create()
         {
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "ID");
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password");
+            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "Name");
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username");
             return View();
         }
 
@@ -66,8 +70,8 @@ namespace QLPhongNET.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "ID", usageSession.ComputerID);
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password", usageSession.UserID);
+            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "Name", usageSession.ComputerID);
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username", usageSession.UserID);
             return View(usageSession);
         }
 
@@ -84,8 +88,8 @@ namespace QLPhongNET.Controllers
             {
                 return NotFound();
             }
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "ID", usageSession.ComputerID);
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password", usageSession.UserID);
+            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "Name", usageSession.ComputerID);
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username", usageSession.UserID);
             return View(usageSession);
         }
 
@@ -121,8 +125,8 @@ namespace QLPhongNET.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "ID", usageSession.ComputerID);
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Password", usageSession.UserID);
+            ViewData["ComputerID"] = new SelectList(_context.Computers, "ID", "Name", usageSession.ComputerID);
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Username", usageSession.UserID);
             return View(usageSession);
         }
 

@@ -1,0 +1,52 @@
+@model QLPhongNET.Models.ComputerCategory
+
+@{
+    ViewData["Title"] = "Thêm loại máy mới";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Thêm loại máy mới</h1>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin loại máy</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateCategory">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Tên loại máy</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PricePerHour" class="control-label">Giá mỗi giờ</label>
+                    <div class="input-group">
+                        <input asp-for="PricePerHour" class="form-control" type="number" min="0" step="1000" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">VNĐ</span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="PricePerHour" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu
+                    </button>
+                    <a asp-action="ComputerCategories" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

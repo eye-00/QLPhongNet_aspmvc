@@ -1,0 +1,89 @@
+@model IEnumerable<QLPhongNET.Models.Computer>
+
+@{
+    ViewData["Title"] = "Quản lý máy tính";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Quản lý máy tính</h1>
+        <a asp-action="CreateComputer" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Thêm máy tính mới
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách máy tính</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên máy</th>
+                            <th>Loại máy</th>
+                            <th>Giá mỗi giờ</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID</td>
+                                <td>@item.Name</td>
+                                <td>@item.Category?.Name</td>
+                                <td>@item.Category?.PricePerHour.ToString("N0") VNĐ</td>
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case "Available":
+                                            <span class="badge badge-success">Sẵn sàng</span>
+                                            break;
+                                        case "In Use":
+                                            <span class="badge badge-warning">Đang sử dụng</span>
+                                            break;
+                                        case "Maintenance":
+                                            <span class="badge badge-danger">Bảo trì</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="EditComputer" asp-route-id="@item.ID" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Sửa
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                }
+            });
+        });
+    </script>
+} 

@@ -1,0 +1,74 @@
+@model IEnumerable<QLPhongNET.Models.User>
+
+@{
+    ViewData["Title"] = "Quản lý người dùng";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Quản lý người dùng</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a asp-action="CreateUser" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm người dùng mới
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Họ tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Số dư</th>
+                            <th>Vai trò</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID</td>
+                                <td>@item.Username</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Phone</td>
+                                <td>@item.Balance.ToString("N0") VNĐ</td>
+                                <td>
+                                    @if (item.Role == "Admin")
+                                    {
+                                        <span class="badge badge-primary">Admin</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-secondary">User</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="EditUser" asp-route-id="@item.ID" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Sửa
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                }
+            });
+        });
+    </script>
+} 

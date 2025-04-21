@@ -1,15 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using QLPhongNET.Models;
+using QLPhongNET.Data;
 using System.Linq;
 
-namespace QLPhongNet.Controllers
+namespace QLPhongNET.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILogger<HomeController> _logger;
         private readonly QLPhongNetContext _context;
 
-        public HomeController(QLPhongNetContext context)
+        public HomeController(ILogger<HomeController> logger, QLPhongNetContext context)
         {
+            _logger = logger;
             _context = context;
         }
 
@@ -63,6 +67,17 @@ namespace QLPhongNet.Controllers
         {
             ViewData["Message"] = "Liên hệ quản trị viên để biết thêm thông tin.";
             return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

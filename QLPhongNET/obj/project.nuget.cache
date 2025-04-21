@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tGBz3acVBUA=",
+  "dgSpecHash": "92Rjvymqa2M=",
   "success": true,
-  "projectFilePath": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\QLPhongNET.csproj",
+  "projectFilePath": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\QLPhongNET.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hoang\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\hoang\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

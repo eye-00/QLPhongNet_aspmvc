@@ -17,201 +17,253 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = QLPhongNET
 build_property.RootNamespace = QLPhongNET
-build_property.ProjectDir = D:\Code\repos\QLPhongNET\QLPhongNET\
+build_property.ProjectDir = D:\Code2_\New folder\QLPhongNet_aspmvc\QLPhongNET\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Code\repos\QLPhongNET\QLPhongNET
+build_property.MSBuildProjectDirectory = D:\Code2_\New folder\QLPhongNet_aspmvc\QLPhongNET
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ComputerCategories/Create.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/ComputerCategories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ29tcHV0ZXJDYXRlZ29yaWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/Computers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ29tcHV0ZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/CreateCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlQ2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/CreateComputer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlQ29tcHV0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/CreateUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/EditCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdENhdGVnb3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/EditComputer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdENvbXB1dGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Admin/Users.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ComputerCategories/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJDYXRlZ29yaWVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ComputerCategories/Delete.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ComputerCategories/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJDYXRlZ29yaWVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ComputerCategories/Details.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ComputerCategories/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJDYXRlZ29yaWVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ComputerCategories/Edit.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ComputerCategories/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJDYXRlZ29yaWVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ComputerCategories/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ComputerCategories/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJDYXRlZ29yaWVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Computers/Create.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Computers/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Computers/Delete.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Computers/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Computers/Details.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Computers/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Computers/Edit.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Computers/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Computers/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Computers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcHV0ZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/DailyRevenues/Create.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/DailyRevenues/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFpbHlSZXZlbnVlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/DailyRevenues/Delete.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/DailyRevenues/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFpbHlSZXZlbnVlc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/DailyRevenues/Details.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/DailyRevenues/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFpbHlSZXZlbnVlc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/DailyRevenues/Edit.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/DailyRevenues/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFpbHlSZXZlbnVlc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/DailyRevenues/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/DailyRevenues/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFpbHlSZXZlbnVlc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Home/About.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Home/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Home/Contact.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Home/Contact.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Home/Dashboard.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Home/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Home/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Home/Privacy.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Home/Profile.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Home/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Services/Create.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Services/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Services/Delete.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Services/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Services/Details.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Services/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Services/Edit.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Services/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Services/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Services/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ServiceUsages/Create.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ServiceUsages/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVVzYWdlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ServiceUsages/Delete.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ServiceUsages/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVVzYWdlc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ServiceUsages/Details.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ServiceUsages/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVVzYWdlc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ServiceUsages/Edit.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ServiceUsages/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVVzYWdlc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/ServiceUsages/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/ServiceUsages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVVzYWdlc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Shared/Error.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Shared/_LayoutDashboard.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Shared/_AdminLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Shared/_LayoutDashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXREYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Shared/_LoginLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/UsageSessions/Create.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/UsageSessions/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNhZ2VTZXNzaW9uc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/UsageSessions/Delete.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/UsageSessions/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNhZ2VTZXNzaW9uc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/UsageSessions/Details.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/UsageSessions/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNhZ2VTZXNzaW9uc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/UsageSessions/Edit.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/UsageSessions/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNhZ2VTZXNzaW9uc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/UsageSessions/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/UsageSessions/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNhZ2VTZXNzaW9uc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Users/Create.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Users/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Users/Delete.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Users/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Users/Details.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Users/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Users/Edit.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Users/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Users/Index.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/_ViewImports.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/_ViewStart.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Code/repos/QLPhongNET/QLPhongNET/Views/Shared/_Layout.cshtml]
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-vm8vpuhakq

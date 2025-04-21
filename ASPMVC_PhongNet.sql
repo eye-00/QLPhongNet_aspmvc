@@ -1,7 +1,7 @@
-CREATE Database QLPhongNet_ASPMVC
+CREATE Database QLPhongNet_ASPMVC2
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
-Use QLPhongNet_ASPMVC;
+Use QLPhongNet_ASPMVC2;
 Create Table ComputerCategories(
 	ID int auto_increment primary key,
     Name varchar(50),

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\QLPhongNET.csproj": {}
+    "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\QLPhongNET.csproj": {}
   },
   "projects": {
-    "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\QLPhongNET.csproj": {
+    "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\QLPhongNET.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\QLPhongNET.csproj",
+        "projectUniqueName": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\QLPhongNET.csproj",
         "projectName": "QLPhongNET",
-        "projectPath": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\QLPhongNET.csproj",
+        "projectPath": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\QLPhongNET.csproj",
         "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\repos\\QLPhongNET\\QLPhongNET\\obj\\",
+        "outputPath": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

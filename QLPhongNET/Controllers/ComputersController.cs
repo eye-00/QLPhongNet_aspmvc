@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using QLPhongNET.Data;
 using QLPhongNET.Models;
 
 namespace QLPhongNET.Controllers
@@ -21,8 +22,10 @@ namespace QLPhongNET.Controllers
         // GET: Computers
         public async Task<IActionResult> Index()
         {
-            var qLPhongNetContext = _context.Computers.Include(c => c.Category);
-            return View(await qLPhongNetContext.ToListAsync());
+            var computers = await _context.Computers
+                .Include(c => c.Category)
+                .ToListAsync();
+            return View(computers);
         }
 
         // GET: Computers/Details/5
@@ -47,7 +50,14 @@ namespace QLPhongNET.Controllers
         // GET: Computers/Create
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.ComputerCategories, "ID", "ID");
+            var categories = _context.ComputerCategories.ToList();
+            if (!categories.Any())
+            {
+                ModelState.AddModelError("", "Vui lòng thêm loại máy trước khi thêm máy tính");
+                return RedirectToAction("Create", "ComputerCategories");
+            }
+
+            ViewData["Categories"] = new SelectList(categories, "ID", "Name");
             return View();
         }
 
@@ -56,15 +66,25 @@ namespace QLPhongNET.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Status,CategoryID")] Computer computer)
+        public async Task<IActionResult> Create([Bind("ID,Name,Status,CatID")] Computer computer)
         {
             if (ModelState.IsValid)
             {
+                // Kiểm tra xem loại máy có tồn tại không
+                var category = await _context.ComputerCategories.FindAsync(computer.CatID);
+                if (category == null)
+                {
+                    ModelState.AddModelError("CatID", "Loại máy không tồn tại");
+                    ViewData["Categories"] = new SelectList(_context.ComputerCategories, "ID", "Name");
+                    return View(computer);
+                }
+
                 _context.Add(computer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.ComputerCategories, "ID", "ID", computer.CategoryID);
+
+            ViewData["Categories"] = new SelectList(_context.ComputerCategories, "ID", "Name", computer.CatID);
             return View(computer);
         }
 
@@ -81,7 +101,15 @@ namespace QLPhongNET.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.ComputerCategories, "ID", "ID", computer.CategoryID);
+
+            var categories = await _context.ComputerCategories.ToListAsync();
+            if (!categories.Any())
+            {
+                ModelState.AddModelError("", "Không tìm thấy loại máy nào");
+                return View(computer);
+            }
+
+            ViewData["Categories"] = new SelectList(categories, "ID", "Name", computer.CatID);
             return View(computer);
         }
 
@@ -90,7 +118,7 @@ namespace QLPhongNET.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Status,CategoryID")] Computer computer)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Status,CatID")] Computer computer)
         {
             if (id != computer.ID)
             {
@@ -99,6 +127,15 @@ namespace QLPhongNET.Controllers
 
             if (ModelState.IsValid)
             {
+                // Kiểm tra xem loại máy có tồn tại không
+                var category = await _context.ComputerCategories.FindAsync(computer.CatID);
+                if (category == null)
+                {
+                    ModelState.AddModelError("CatID", "Loại máy không tồn tại");
+                    ViewData["Categories"] = new SelectList(_context.ComputerCategories, "ID", "Name", computer.CatID);
+                    return View(computer);
+                }
+
                 try
                 {
                     _context.Update(computer);
@@ -117,7 +154,8 @@ namespace QLPhongNET.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.ComputerCategories, "ID", "ID", computer.CategoryID);
+
+            ViewData["Categories"] = new SelectList(_context.ComputerCategories, "ID", "Name", computer.CatID);
             return View(computer);
         }
 
