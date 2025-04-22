@@ -264,6 +264,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Statistics/ByComputer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlzdGljc1xCeUNvbXB1dGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Statistics/ByTime.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlzdGljc1xCeVRpbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Statistics/ByUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlzdGljc1xCeVVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Statistics/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlzdGljc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/Statistics/Revenue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlzdGljc1xSZXZlbnVlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Code2_/New folder/QLPhongNet_aspmvc/QLPhongNET/Views/UsageSessions/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNhZ2VTZXNzaW9uc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

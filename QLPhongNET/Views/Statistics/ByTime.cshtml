@@ -1,0 +1,71 @@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Thống kê theo thời gian";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Thống kê theo thời gian</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bộ lọc</h6>
+        </div>
+        <div class="card-body">
+            <form method="get" class="form-inline">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="groupBy" class="mr-2">Nhóm theo:</label>
+                    <select class="form-control" id="groupBy" name="groupBy">
+                        <option value="day" selected="@(ViewBag.GroupBy == "day")">Ngày</option>
+                        <option value="week" selected="@(ViewBag.GroupBy == "week")">Tuần</option>
+                        <option value="month" selected="@(ViewBag.GroupBy == "month")">Tháng</option>
+                        <option value="year" selected="@(ViewBag.GroupBy == "year")">Năm</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Lọc</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Kết quả thống kê</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Thời gian</th>
+                            <th>Số phiên sử dụng</th>
+                            <th>Tổng giờ sử dụng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Date.ToString("dd/MM/yyyy HH:00")</td>
+                                <td>@item.TotalSessions</td>
+                                <td>@item.TotalHours.ToString("N1")</td>
+                                <td>@item.TotalRevenue.ToString("N0") VNĐ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                }
+            });
+        });
+    </script>
+} 
