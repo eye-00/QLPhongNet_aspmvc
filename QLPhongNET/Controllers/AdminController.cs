@@ -90,34 +90,53 @@ namespace QLPhongNET.Controllers
         // POST: Admin/Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(int id, User user)
+        public IActionResult EditUser(User model)
         {
-            if (id != user.ID)
+            try
             {
-                return NotFound();
-            }
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                var user = _context.Users.Find(model.ID);
+                if (user == null)
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    TempData["Error"] = "Không tìm thấy người dùng";
+                    return RedirectToAction("Users");
                 }
-                catch (DbUpdateConcurrencyException)
+
+                // Kiểm tra username đã tồn tại chưa (trừ user hiện tại)
+                var existingUser = _context.Users.FirstOrDefault(u => u.Username == model.Username && u.ID != model.ID);
+                if (existingUser != null)
                 {
-                    if (!UserExists(user.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError("Username", "Tên đăng nhập đã tồn tại");
+                    return View(model);
                 }
-                return RedirectToAction(nameof(Users));
+
+                // Cập nhật thông tin cơ bản
+                user.Username = model.Username;
+                user.FullName = model.FullName;
+                user.Phone = model.Phone;
+                user.Balance = model.Balance;
+                user.Role = model.Role;
+
+                // Chỉ cập nhật mật khẩu nếu người dùng nhập mật khẩu mới
+                if (!string.IsNullOrEmpty(model.Password))
+                {
+                    user.Password = model.Password;
+                }
+
+                _context.SaveChanges();
+                TempData["Success"] = "Cập nhật người dùng thành công";
+                return RedirectToAction("Users");
             }
-            return View(user);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi cập nhật người dùng");
+                TempData["Error"] = "Có lỗi xảy ra khi cập nhật người dùng";
+                return View(model);
+            }
         }
 
         // GET: Admin/Computers
@@ -456,12 +475,38 @@ namespace QLPhongNET.Controllers
         }
 
         // GET: Admin/Revenue
-        public async Task<IActionResult> Revenue()
+        [HttpGet]
+        public async Task<IActionResult> Revenue(DateTime? fromDate = null, DateTime? toDate = null)
         {
-            var revenues = await _context.DailyRevenues
-                .OrderByDescending(r => r.ReportDate)
-                .ToListAsync();
-            return View(revenues);
+            try
+            {
+                var query = _context.DailyRevenues.AsQueryable();
+
+                if (fromDate.HasValue)
+                {
+                    query = query.Where(r => r.ReportDate >= fromDate.Value.Date);
+                }
+
+                if (toDate.HasValue)
+                {
+                    query = query.Where(r => r.ReportDate <= toDate.Value.Date);
+                }
+
+                var revenues = await query
+                    .OrderByDescending(r => r.ReportDate)
+                    .ToListAsync();
+
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+
+                return View(revenues);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi lấy dữ liệu doanh thu");
+                TempData["Error"] = "Có lỗi xảy ra khi lấy dữ liệu doanh thu";
+                return View(new List<DailyRevenue>());
+            }
         }
 
         public async Task<IActionResult> GetActiveSessions()

@@ -1,0 +1,236 @@
+@{
+    ViewData["Title"] = $"Chi tiết doanh thu ngày {ViewBag.Date:dd/MM/yyyy}";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <div class="d-flex align-items-center">
+            <form method="get" class="form-inline mr-2">
+                <div class="input-group">
+                    <input type="date" name="date" class="form-control" value="@ViewBag.Date.ToString("yyyy-MM-dd")" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <a href="@Url.Action("Revenue", "Admin")" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <!-- Thống kê tổng quan -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Doanh thu sử dụng máy</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @((ViewBag.RechargeStats?.TotalUsageRevenue ?? 0).ToString("N0")) VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-desktop fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Doanh thu dịch vụ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @((ViewBag.RechargeStats?.TotalServiceRevenue ?? 0).ToString("N0")) VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-coffee fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Tổng nạp tiền</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @((ViewBag.RechargeStats?.TotalRecharge ?? 0).ToString("N0")) VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Tổng doanh thu</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @(((ViewBag.RechargeStats?.TotalUsageRevenue ?? 0) + (ViewBag.RechargeStats?.TotalServiceRevenue ?? 0)).ToString("N0")) VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết theo máy -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết theo máy</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="computerTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tên máy</th>
+                            <th>Loại máy</th>
+                            <th>Số phiên</th>
+                            <th>Tổng giờ</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.ComputerStats ?? new List<dynamic>())
+                        {
+                            <tr>
+                                <td>@item.ComputerName</td>
+                                <td>@item.CategoryName</td>
+                                <td>@item.TotalSessions</td>
+                                <td>@item.TotalHours.ToString("N1")</td>
+                                <td>@item.TotalRevenue.ToString("N0") VNĐ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết theo người dùng -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết theo người dùng</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tên đăng nhập</th>
+                            <th>Họ tên</th>
+                            <th>Số phiên</th>
+                            <th>Tổng giờ</th>
+                            <th>Chi phí</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.UserStats ?? new List<dynamic>())
+                        {
+                            <tr>
+                                <td>@item.Username</td>
+                                <td>@item.FullName</td>
+                                <td>@item.TotalSessions</td>
+                                <td>@item.TotalHours.ToString("N1")</td>
+                                <td>@item.TotalSpent.ToString("N0") VNĐ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết dịch vụ -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết dịch vụ</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="serviceTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tên dịch vụ</th>
+                            <th>Số lượng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.ServiceStats ?? new List<dynamic>())
+                        {
+                            <tr>
+                                <td>@item.ServiceName</td>
+                                <td>@item.TotalQuantity</td>
+                                <td>@item.TotalRevenue.ToString("N0") VNĐ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#computerTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                },
+                "order": [[4, "desc"]]
+            });
+
+            $('#userTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                },
+                "order": [[4, "desc"]]
+            });
+
+            $('#serviceTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                },
+                "order": [[2, "desc"]]
+            });
+        });
+    </script>
+} 

@@ -7,58 +7,72 @@
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Quản lý máy tính</h1>
-        <a href="@Url.Action("Create", "Computers")" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Thêm máy mới
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <a href="@Url.Action("CreateComputer")" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm máy tính
         </a>
     </div>
 
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <!-- Thống kê -->
     <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Sẵn sàng</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.AvailableCount</div>
+                                Máy trống</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Count(c => c.Status == ComputerStatus.Available)
+                            </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-check-circle fa-2x text-success"></i>
+                            <i class="fas fa-desktop fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Máy đang sử dụng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Count(c => c.Status == ComputerStatus.InUse)
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Đang sử dụng</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.InUseCount</div>
+                                Máy bảo trì</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Count(c => c.Status == ComputerStatus.Maintenance)
+                            </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Bảo trì</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.MaintenanceCount</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-tools fa-2x text-danger"></i>
+                            <i class="fas fa-wrench fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -66,27 +80,14 @@
         </div>
     </div>
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["Success"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    }
-
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Danh sách máy tính</h6>
-        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Tên máy</th>
-                            <th>Danh mục</th>
+                            <th>Loại máy</th>
                             <th>Giá/giờ</th>
                             <th>Trạng thái</th>
                             <th>Thao tác</th>
@@ -100,26 +101,20 @@
                                 <td>@item.Category?.Name</td>
                                 <td>@item.Category?.PricePerHour.ToString("N0") VNĐ</td>
                                 <td>
-                                    @switch (item.Status)
-                                    {
-                                        case ComputerStatus.Available:
-                                            <span class="badge bg-success">Sẵn sàng</span>
-                                            break;
-                                        case ComputerStatus.InUse:
-                                            <span class="badge bg-warning">Đang sử dụng</span>
-                                            break;
-                                        case ComputerStatus.Maintenance:
-                                            <span class="badge bg-danger">Bảo trì</span>
-                                            break;
+                                    @{
+                                        var (badgeClass, statusText) = item.Status switch
+                                        {
+                                            ComputerStatus.Available => ("success", "Trống"),
+                                            ComputerStatus.InUse => ("primary", "Đang sử dụng"),
+                                            ComputerStatus.Maintenance => ("warning", "Bảo trì"),
+                                            _ => ("secondary", "Không xác định")
+                                        };
                                     }
+                                    <span class="badge badge-@badgeClass">@statusText</span>
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Edit", "Computers", new { id = item.ID })" class="btn btn-primary btn-sm">
+                                    <a href="@Url.Action("EditComputer", new { id = item.ID })" class="btn btn-sm btn-primary">
                                         <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="@Url.Action("Delete", "Computers", new { id = item.ID })" class="btn btn-danger btn-sm"
-                                       onclick="return confirm('Bạn có chắc muốn xóa máy này?')">
-                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -135,8 +130,8 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
                 }
             });
         });

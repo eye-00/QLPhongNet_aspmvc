@@ -40,22 +40,22 @@ namespace QLPhongNET.Controllers
             return View();
         }
 
-        // GET: Statistics/ByComputer
-        public async Task<IActionResult> ByComputer(DateTime? startDate, DateTime? endDate)
+        // GET: Statistics/DailyDetails
+        public async Task<IActionResult> DailyDetails(DateTime? date = null)
         {
             try
             {
-                var query = _context.UsageSessions
+                var targetDate = date?.Date ?? DateTime.Today;
+                var now = DateTime.Now;
+
+                // Thống kê theo máy
+                var computerStats = await _context.UsageSessions
                     .Include(s => s.Computer)
                         .ThenInclude(c => c.Category)
-                    .AsQueryable();
+                    .Where(s => s.StartTime.Date == targetDate && s.Computer != null && s.Computer.Category != null)
+                    .ToListAsync();
 
-                if (startDate.HasValue)
-                    query = query.Where(s => s.StartTime >= startDate.Value);
-                if (endDate.HasValue)
-                    query = query.Where(s => s.StartTime <= endDate.Value);
-
-                var statistics = await query
+                var computerStatsGrouped = computerStats
                     .GroupBy(s => new { s.ComputerID, s.Computer.Name, CategoryName = s.Computer.Category.Name })
                     .Select(g => new
                     {
@@ -63,21 +63,129 @@ namespace QLPhongNET.Controllers
                         ComputerName = g.Key.Name,
                         CategoryName = g.Key.CategoryName,
                         TotalSessions = g.Count(),
+                        TotalHours = g.Sum(s => (s.EndTime.HasValue ? s.EndTime.Value : now).Subtract(s.StartTime).TotalHours),
+                        TotalRevenue = g.Sum(s => s.TotalCost)
+                    })
+                    .OrderByDescending(s => s.TotalRevenue)
+                    .ToList();
+
+                // Thống kê theo người dùng
+                var userStats = await _context.UsageSessions
+                    .Include(s => s.User)
+                    .Where(s => s.StartTime.Date == targetDate && s.User != null)
+                    .ToListAsync();
+
+                var userStatsGrouped = userStats
+                    .GroupBy(s => new { s.UserID, s.User.Username, s.User.FullName })
+                    .Select(g => new
+                    {
+                        UserID = g.Key.UserID,
+                        Username = g.Key.Username,
+                        FullName = g.Key.FullName,
+                        TotalSessions = g.Count(),
+                        TotalHours = g.Sum(s => (s.EndTime.HasValue ? s.EndTime.Value : now).Subtract(s.StartTime).TotalHours),
+                        TotalSpent = g.Sum(s => s.TotalCost)
+                    })
+                    .OrderByDescending(s => s.TotalSpent)
+                    .ToList();
+
+                // Thống kê dịch vụ
+                var serviceStats = await _context.ServiceUsages
+                    .Include(su => su.Service)
+                    .Where(su => su.UsageTime.Date == targetDate && su.Service != null)
+                    .ToListAsync();
+
+                var serviceStatsGrouped = serviceStats
+                    .GroupBy(su => new { su.ServiceID, su.Service.Name })
+                    .Select(g => new
+                    {
+                        ServiceID = g.Key.ServiceID,
+                        ServiceName = g.Key.Name,
+                        TotalQuantity = g.Sum(su => su.Quantity),
+                        TotalRevenue = g.Sum(su => su.TotalPrice)
+                    })
+                    .OrderByDescending(s => s.TotalRevenue)
+                    .ToList();
+
+                // Thống kê nạp tiền
+                var rechargeStats = await _context.DailyRevenues
+                    .Where(r => r.ReportDate == targetDate)
+                    .Select(r => new
+                    {
+                        TotalRecharge = r.TotalRecharge,
+                        TotalUsageRevenue = r.TotalUsageRevenue,
+                        TotalServiceRevenue = r.TotalServiceRevenue
+                    })
+                    .FirstOrDefaultAsync() ?? new
+                    {
+                        TotalRecharge = 0m,
+                        TotalUsageRevenue = 0m,
+                        TotalServiceRevenue = 0m
+                    };
+
+                ViewBag.ComputerStats = computerStatsGrouped;
+                ViewBag.UserStats = userStatsGrouped;
+                ViewBag.ServiceStats = serviceStatsGrouped;
+                ViewBag.RechargeStats = rechargeStats;
+                ViewBag.Date = targetDate;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi thống kê chi tiết doanh thu trong ngày");
+                TempData["Error"] = "Có lỗi xảy ra khi thống kê: " + ex.Message;
+                return View();
+            }
+        }
+
+        // GET: Statistics/ByComputer
+        public IActionResult ByComputer(DateTime? fromDate, DateTime? toDate)
+        {
+            try
+            {
+                var query = _context.UsageSessions
+                    .Include(s => s.Computer)
+                    .Include(s => s.Computer.Category)
+                    .AsQueryable();
+
+                if (fromDate.HasValue)
+                {
+                    query = query.Where(s => s.StartTime.Date >= fromDate.Value.Date);
+                }
+
+                if (toDate.HasValue)
+                {
+                    query = query.Where(s => s.StartTime.Date <= toDate.Value.Date);
+                }
+
+                var stats = query
+                    .GroupBy(s => new { 
+                        ComputerId = s.Computer.ID, 
+                        ComputerName = s.Computer.Name, 
+                        CategoryName = s.Computer.Category.Name 
+                    })
+                    .Select(g => new
+                    {
+                        ComputerName = g.Key.ComputerName,
+                        CategoryName = g.Key.CategoryName,
+                        TotalSessions = g.Count(),
                         TotalHours = g.Sum(s => (double)((s.EndTime ?? DateTime.Now) - s.StartTime).TotalHours),
                         TotalRevenue = g.Sum(s => s.TotalCost ?? 0)
                     })
                     .OrderByDescending(s => s.TotalRevenue)
-                    .ToListAsync();
+                    .ToList();
 
-                ViewBag.StartDate = startDate;
-                ViewBag.EndDate = endDate;
-                return View(statistics);
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+
+                return View(stats);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi thống kê theo máy tính");
-                TempData["Error"] = "Có lỗi xảy ra khi thống kê: " + ex.Message;
-                return View(new List<object>());
+                _logger.LogError(ex, "Lỗi khi lấy thống kê theo máy");
+                TempData["Error"] = "Có lỗi xảy ra khi lấy thống kê";
+                return View(new List<dynamic>());
             }
         }
 
@@ -88,6 +196,7 @@ namespace QLPhongNET.Controllers
             {
                 var query = _context.UsageSessions
                     .Include(s => s.User)
+                    .Where(s => s.User != null)
                     .AsQueryable();
 
                 if (startDate.HasValue)
@@ -104,7 +213,7 @@ namespace QLPhongNET.Controllers
                         FullName = g.Key.FullName,
                         TotalSessions = g.Count(),
                         TotalHours = g.Sum(s => (double)((s.EndTime ?? DateTime.Now) - s.StartTime).TotalHours),
-                        TotalSpent = g.Sum(s => s.TotalCost ?? 0)
+                        TotalSpent = g.Sum(s => (decimal?)s.TotalCost ?? 0m)
                     })
                     .OrderByDescending(s => s.TotalSpent)
                     .ToListAsync();
@@ -122,48 +231,63 @@ namespace QLPhongNET.Controllers
         }
 
         // GET: Statistics/ByTime
-        public async Task<IActionResult> ByTime(string groupBy = "day")
+        public IActionResult ByTime(string groupBy = "day", DateTime? fromDate = null, DateTime? toDate = null)
         {
             try
             {
-                var query = _context.UsageSessions.AsQueryable();
-                var now = DateTime.Now;
-                var startDate = groupBy switch
+                if (!fromDate.HasValue)
                 {
-                    "week" => now.AddDays(-7),
-                    "month" => now.AddMonths(-1),
-                    "year" => now.AddYears(-1),
-                    _ => now.AddDays(-30) // Mặc định là 30 ngày
-                };
+                    fromDate = DateTime.Today.AddDays(-30);
+                }
+                if (!toDate.HasValue)
+                {
+                    toDate = DateTime.Today;
+                }
 
-                query = query.Where(s => s.StartTime >= startDate);
+                var query = _context.UsageSessions.AsQueryable();
 
-                var statistics = await query
+                if (fromDate.HasValue)
+                {
+                    query = query.Where(s => s.StartTime.Date >= fromDate.Value.Date);
+                }
+
+                if (toDate.HasValue)
+                {
+                    query = query.Where(s => s.StartTime.Date <= toDate.Value.Date);
+                }
+
+                var stats = query
                     .GroupBy(s => new
                     {
                         Year = s.StartTime.Year,
                         Month = s.StartTime.Month,
                         Day = s.StartTime.Day,
-                        Hour = s.StartTime.Hour
+                        Week = (s.StartTime.Day - 1) / 7 + 1
                     })
                     .Select(g => new
                     {
-                        Date = new DateTime(g.Key.Year, g.Key.Month, g.Key.Day, g.Key.Hour, 0, 0),
+                        Date = new DateTime(g.Key.Year, g.Key.Month, g.Key.Day),
+                        Week = g.Key.Week,
+                        Month = g.Key.Month,
+                        Year = g.Key.Year,
                         TotalSessions = g.Count(),
-                        TotalHours = g.Sum(s => ((s.EndTime ?? DateTime.Now) - s.StartTime).TotalHours),
+                        TotalHours = g.Sum(s => (double)((s.EndTime ?? DateTime.Now) - s.StartTime).TotalHours),
                         TotalRevenue = g.Sum(s => s.TotalCost ?? 0)
                     })
                     .OrderBy(s => s.Date)
-                    .ToListAsync();
+                    .ToList();
 
                 ViewBag.GroupBy = groupBy;
-                return View(statistics);
+                ViewBag.FromDate = fromDate;
+                ViewBag.ToDate = toDate;
+
+                return View(stats);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi thống kê theo thời gian");
-                TempData["Error"] = "Có lỗi xảy ra khi thống kê: " + ex.Message;
-                return View(new List<object>());
+                _logger.LogError(ex, "Lỗi khi lấy thống kê theo thời gian");
+                TempData["Error"] = "Có lỗi xảy ra khi lấy thống kê";
+                return View(new List<dynamic>());
             }
         }
 

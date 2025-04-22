@@ -1,14 +1,41 @@
 @model IEnumerable<QLPhongNET.Models.DailyRevenue>
+
 @{
-    ViewData["Title"] = "Doanh thu";
+    ViewData["Title"] = "Quản lý doanh thu";
     Layout = "_AdminLayout";
 }
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Báo cáo doanh thu</h1>
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <a href="@Url.Action("DailyDetails", "Statistics")" class="btn btn-primary">
+            <i class="fas fa-chart-line"></i> Xem chi tiết hôm nay
+        </a>
     </div>
 
+    <!-- Bộ lọc -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bộ lọc thời gian</h6>
+        </div>
+        <div class="card-body">
+            <form id="filterForm" method="get" class="form-inline">
+                <div class="form-group mr-2">
+                    <label class="mr-2">Từ ngày:</label>
+                    <input type="date" name="fromDate" id="fromDate" class="form-control" value="@ViewBag.FromDate?.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="form-group mr-2">
+                    <label class="mr-2">Đến ngày:</label>
+                    <input type="date" name="toDate" id="toDate" class="form-control" value="@ViewBag.ToDate?.ToString("yyyy-MM-dd")" />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-filter"></i> Lọc
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Thống kê tổng quan -->
     <div class="row">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -16,17 +43,70 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Doanh thu hôm nay</div>
+                                Doanh thu sử dụng máy</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @{
-                                    var today = Model.FirstOrDefault(r => r.ReportDate.Date == DateTime.Today);
-                                    var total = today?.TotalUsageRevenue + today?.TotalServiceRevenue + today?.TotalRecharge ?? 0;
-                                }
-                                @total.ToString("N0") VNĐ
+                                @Model.Sum(r => r.TotalUsageRevenue).ToString("N0") VNĐ
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-desktop fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Doanh thu dịch vụ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Sum(r => r.TotalServiceRevenue).ToString("N0") VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-coffee fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Tổng nạp tiền</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Sum(r => r.TotalRecharge).ToString("N0") VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Tổng doanh thu</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @((Model.Sum(r => r.TotalUsageRevenue) + Model.Sum(r => r.TotalServiceRevenue)).ToString("N0")) VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -34,9 +114,22 @@
         </div>
     </div>
 
+    <!-- Chi tiết doanh thu -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Chi tiết doanh thu theo ngày</h6>
+            <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                    aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Xuất báo cáo:</div>
+                    <a class="dropdown-item" href="#"><i class="fas fa-file-excel fa-sm fa-fw mr-2 text-gray-400"></i>Excel</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-file-pdf fa-sm fa-fw mr-2 text-gray-400"></i>PDF</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -44,21 +137,28 @@
                     <thead>
                         <tr>
                             <th>Ngày</th>
-                            <th>Doanh thu sử dụng máy</th>
+                            <th>Doanh thu máy</th>
                             <th>Doanh thu dịch vụ</th>
-                            <th>Tổng nạp tiền</th>
-                            <th>Tổng doanh thu</th>
+                            <th>Nạp tiền</th>
+                            <th>Tổng cộng</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.OrderByDescending(r => r.ReportDate))
                         {
                             <tr>
                                 <td>@item.ReportDate.ToString("dd/MM/yyyy")</td>
                                 <td>@item.TotalUsageRevenue.ToString("N0") VNĐ</td>
                                 <td>@item.TotalServiceRevenue.ToString("N0") VNĐ</td>
                                 <td>@item.TotalRecharge.ToString("N0") VNĐ</td>
-                                <td>@((item.TotalUsageRevenue + item.TotalServiceRevenue + item.TotalRecharge).ToString("N0")) VNĐ</td>
+                                <td>@((item.TotalUsageRevenue + item.TotalServiceRevenue).ToString("N0")) VNĐ</td>
+                                <td>
+                                    <a href="@Url.Action("DailyDetails", "Statistics", new { date = item.ReportDate.ToString("yyyy-MM-dd") })" 
+                                       class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i> Chi tiết
+                                    </a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -71,11 +171,20 @@
 @section Scripts {
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+            var table = $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
                 },
-                order: [[0, 'desc']]
+                "order": [[0, "desc"]],
+                "pageLength": 25
+            });
+
+            $('#filterForm').on('submit', function(e) {
+                e.preventDefault();
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                
+                window.location.href = '@Url.Action("Revenue")' + '?fromDate=' + fromDate + '&toDate=' + toDate;
             });
         });
     </script>

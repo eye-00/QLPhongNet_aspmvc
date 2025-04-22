@@ -1,40 +1,46 @@
 @model QLPhongNET.Models.ComputerCategory
+
 @{
     ViewData["Title"] = "Thêm loại máy mới";
     Layout = "_AdminLayout";
 }
 
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>@ViewData["Title"]</h2>
-        <a href="@Url.Action("ComputerCategories")" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Quay lại
-        </a>
-    </div>
+    <h1 class="h3 mb-4 text-gray-800">@ViewData["Title"]</h1>
 
-    <div class="card">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin loại máy</h6>
+        </div>
         <div class="card-body">
             <form asp-action="CreateCategory" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label">Tên loại máy</label>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Tên loại máy</label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="PricePerHour" class="form-label">Giá mỗi giờ (VNĐ)</label>
-                    <input asp-for="PricePerHour" class="form-control" type="number" min="0" step="1000" />
+                <div class="form-group">
+                    <label asp-for="PricePerHour" class="control-label">Giá/giờ</label>
+                    <input asp-for="PricePerHour" class="form-control" type="number" step="1000" />
                     <span asp-validation-for="PricePerHour" class="text-danger"></span>
                 </div>
 
-                <div class="text-center">
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Lưu
                     </button>
-                    <a href="@Url.Action("ComputerCategories")" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Hủy
+                    <a asp-action="ComputerCategories" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại
                     </a>
                 </div>
             </form>

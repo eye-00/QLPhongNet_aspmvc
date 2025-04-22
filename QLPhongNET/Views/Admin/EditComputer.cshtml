@@ -2,19 +2,25 @@
 
 @{
     ViewData["Title"] = "Chỉnh sửa máy tính";
+    Layout = "_AdminLayout";
 }
 
 <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Chỉnh sửa máy tính</h1>
-    </div>
+    <h1 class="h3 mb-4 text-gray-800">@ViewData["Title"]</h1>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Thông tin máy tính</h6>
         </div>
         <div class="card-body">
-            <form asp-action="EditComputer">
+            <form asp-action="EditComputer" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
                 
@@ -35,8 +41,8 @@
                 <div class="form-group">
                     <label asp-for="Status" class="control-label">Trạng thái</label>
                     <select asp-for="Status" class="form-control">
-                        <option value="Available">Sẵn sàng</option>
-                        <option value="In Use">Đang sử dụng</option>
+                        <option value="Available">Trống</option>
+                        <option value="InUse">Đang sử dụng</option>
                         <option value="Maintenance">Bảo trì</option>
                     </select>
                     <span asp-validation-for="Status" class="text-danger"></span>
