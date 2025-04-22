@@ -12,13 +12,13 @@ namespace QLPhongNET.Models
         public int UserID { get; set; }
 
         [ForeignKey("UserID")]
-        public virtual User User { get; set; }
+        public required User User { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        public required string Title { get; set; }
 
         [Required]
-        public string Content { get; set; }
+        public required string Content { get; set; }
 
         [Required]
         public DateTime CreatedTime { get; set; }

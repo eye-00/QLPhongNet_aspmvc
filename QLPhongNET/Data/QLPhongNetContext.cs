@@ -19,6 +19,7 @@ namespace QLPhongNET.Data
         public DbSet<DailyRevenue> DailyRevenues { get; set; }
         public DbSet<RechargeRequest> RechargeRequests { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<LoginSession> LoginSessions { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -44,6 +45,14 @@ namespace QLPhongNET.Data
                     .HasForeignKey(e => e.CatID)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // Cấu hình chuyển đổi cho ComputerStatus
+            modelBuilder.Entity<Computer>()
+                .Property(e => e.Status)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (ComputerStatus)Enum.Parse(typeof(ComputerStatus), v.Replace(" ", ""))
+                );
 
             // ComputerCategory
             modelBuilder.Entity<ComputerCategory>(entity =>
@@ -171,14 +180,6 @@ namespace QLPhongNET.Data
                     .HasForeignKey(e => e.UserID)
                     .OnDelete(DeleteBehavior.Restrict);
             });
-
-            // Cấu hình chuyển đổi cho ComputerStatus
-            modelBuilder.Entity<Computer>()
-                .Property(e => e.Status)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (ComputerStatus)Enum.Parse(typeof(ComputerStatus), v)
-                );
         }
     }
 }

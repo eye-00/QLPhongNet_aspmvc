@@ -68,7 +68,16 @@ CREATE TABLE DailyRevenue (
     TotalRecharge DECIMAL(15, 2),
     TotalServiceRevenue DECIMAL(15, 2)
 );
-
+CREATE TABLE LoginSessions (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    LoginTime DATETIME NOT NULL,
+    LogoutTime DATETIME,
+    IPAddress VARCHAR(45),
+    UserAgent VARCHAR(500),
+    IsActive BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (UserID) REFERENCES User(ID)
+);
 -- Thêm dữ liệu mẫu
 INSERT INTO ComputerCategories(Name, PricePerHour) VALUES
 ('Phổ thông', 10000),
@@ -84,3 +93,4 @@ INSERT INTO User(Username, Password, FullName, Phone, Balance, Role) VALUES
 ('user1', '123456', 'Nguyen Van A', '0912345678', 50000, 0),
 ('user2', '123456', 'Nguyen Thi B', '0987654321', 200000, 0),
 ('admin1', 'Admin1234456', 'Tran Thi C', '0123123123', 0, 1);
+

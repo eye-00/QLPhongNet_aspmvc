@@ -110,8 +110,9 @@ namespace QLPhongNET.Controllers.Admin
                 var notification = new Notification
                 {
                     UserID = request.UserID,
+                    User = request.User,
                     Title = "Nạp tiền thành công",
-                    Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn đã được duyệt.",
+                    Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn đã được phê duyệt",
                     CreatedTime = DateTime.Now,
                     IsRead = false
                 };
@@ -147,8 +148,9 @@ namespace QLPhongNET.Controllers.Admin
                 var notification = new Notification
                 {
                     UserID = request.UserID,
-                    Title = "Nạp tiền thất bại",
-                    Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn đã bị từ chối. Lý do: {note ?? "Không có"}",
+                    User = request.User,
+                    Title = "Nạp tiền bị từ chối",
+                    Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn bị từ chối. Lý do: {note ?? "Không có"}",
                     CreatedTime = DateTime.Now,
                     IsRead = false
                 };

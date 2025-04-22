@@ -18,58 +18,31 @@ namespace QLPhongNET.Controllers
         }
 
         // GET: User/Index
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var username = HttpContext.Session.GetString("Username");
             if (string.IsNullOrEmpty(username))
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Account");
             }
 
-            var user = await _context.Users
-                .Select(u => new
-                {
-                    u.ID,
-                    u.Username,
-                    u.Balance,
-                    ActiveSession = u.UsageSessions
-                        .Where(s => s.EndTime == null)
-                        .Select(s => new
-                        {
-                            s.ID,
-                            s.StartTime,
-                            Computer = new
-                            {
-                                s.Computer.Name,
-                                Category = new
-                                {
-                                    s.Computer.Category.Name,
-                                    s.Computer.Category.PricePerHour
-                                }
-                            }
-                        })
-                        .FirstOrDefault()
-                })
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Username == username);
-
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
             if (user == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Account");
             }
 
-            var computers = await _context.Computers
+            ViewBag.Username = username;
+            ViewBag.Balance = user.Balance;
+            ViewBag.ActiveSession = _context.UsageSessions
+                .Include(s => s.Computer)
+                    .ThenInclude(c => c.Category)
+                .FirstOrDefault(s => s.UserID == user.ID && s.EndTime == null);
+
+            var computers = _context.Computers
                 .Include(c => c.Category)
-                .AsNoTracking()
-                .ToListAsync();
-
-            var services = await _context.Services
-                .AsNoTracking()
-                .ToListAsync();
-
-            ViewBag.CurrentUser = new User { ID = user.ID, Username = user.Username, Balance = user.Balance };
-            ViewBag.CurrentSession = user.ActiveSession;
-            ViewBag.Services = services;
+                .OrderBy(c => c.Name)
+                .ToList();
 
             return View(computers);
         }
@@ -274,14 +247,17 @@ namespace QLPhongNET.Controllers
             {
                 UserID = user.ID,
                 ComputerID = computer.ID,
-                StartTime = DateTime.Now
+                StartTime = DateTime.Now,
+                TotalCost = 0
             };
 
+            // Cập nhật trạng thái máy tính
             computer.Status = ComputerStatus.InUse;
 
             try
             {
                 _context.UsageSessions.Add(session);
+                _context.Computers.Update(computer);
                 await _context.SaveChangesAsync();
 
                 TempData["Success"] = "Bắt đầu sử dụng máy thành công";
@@ -418,16 +394,16 @@ namespace QLPhongNET.Controllers
             _context.RechargeRequests.Add(request);
 
             // Tạo thông báo cho admin
-            var adminNotification = new Notification
+            var notification = new Notification
             {
                 UserID = user.ID,
-                Title = "Yêu cầu nạp tiền mới",
-                Content = $"Người dùng {user.Username} yêu cầu nạp {amount:N0} VNĐ",
+                User = user,
+                Title = "Yêu cầu nạp tiền",
+                Content = $"Yêu cầu nạp {amount:N0} VNĐ của bạn đã được gửi",
                 CreatedTime = DateTime.Now,
-                Link = "/Admin/Recharge",
                 IsRead = false
             };
-            _context.Notifications.Add(adminNotification);
+            _context.Notifications.Add(notification);
 
             try
             {

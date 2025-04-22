@@ -33,9 +33,31 @@ namespace QLPhongNET.Controllers
 
             if (user != null)
             {
+                // Kết thúc phiên đăng nhập cũ nếu có
+                var oldSession = await _context.LoginSessions
+                    .FirstOrDefaultAsync(s => s.UserID == user.ID && s.IsActive);
+                if (oldSession != null)
+                {
+                    oldSession.IsActive = false;
+                    oldSession.LogoutTime = DateTime.Now;
+                }
+
+                // Tạo phiên đăng nhập mới
+                var newSession = new LoginSession
+                {
+                    UserID = user.ID,
+                    LoginTime = DateTime.Now,
+                    IPAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    UserAgent = HttpContext.Request.Headers["User-Agent"].ToString(),
+                    IsActive = true
+                };
+                _context.LoginSessions.Add(newSession);
+                await _context.SaveChangesAsync();
+
                 HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetString("Role", user.Role.ToString());
                 HttpContext.Session.SetInt32("UserID", user.ID);
+                HttpContext.Session.SetInt32("LoginSessionID", newSession.ID);
 
                 if (user.Role == UserRole.Admin)
                 {
@@ -48,9 +70,20 @@ namespace QLPhongNET.Controllers
             return View();
         }
 
-        // GET: Account/Logout
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            var loginSessionId = HttpContext.Session.GetInt32("LoginSessionID");
+            if (loginSessionId.HasValue)
+            {
+                var session = await _context.LoginSessions.FindAsync(loginSessionId.Value);
+                if (session != null)
+                {
+                    session.IsActive = false;
+                    session.LogoutTime = DateTime.Now;
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }

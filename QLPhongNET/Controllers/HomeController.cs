@@ -19,43 +19,31 @@ namespace QLPhongNET.Controllers
         }
 
         // Trang chính
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var username = HttpContext.Session.GetString("Username");
             if (string.IsNullOrEmpty(username))
             {
-                return RedirectToAction("Login", "User");
+                return RedirectToAction("Login", "Account");
             }
 
-            var user = await _context.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Username == username);
-            
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
             if (user == null)
             {
-                HttpContext.Session.Clear();
-                return RedirectToAction("Login", "User");
+                return RedirectToAction("Login", "Account");
             }
 
-            // Lấy phiên đang hoạt động của người dùng
-            var activeSession = await _context.UsageSessions
+            ViewBag.Username = username;
+            ViewBag.Balance = user.Balance;
+            ViewBag.ActiveSession = _context.UsageSessions
                 .Include(s => s.Computer)
                     .ThenInclude(c => c.Category)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(s => s.UserID == user.ID && s.EndTime == null);
+                .FirstOrDefault(s => s.UserID == user.ID && s.EndTime == null);
 
-            var computers = await _context.Computers
+            var computers = _context.Computers
                 .Include(c => c.Category)
-                .AsNoTracking()
                 .OrderBy(c => c.Name)
-                .ToListAsync();
-
-            // Lưu thông tin người dùng vào ViewBag
-            ViewBag.Username = user.Username;
-            ViewBag.Balance = user.Balance;
-            ViewBag.Role = user.Role.ToString();
-            ViewBag.ActiveSession = activeSession;
-            ViewBag.UserID = user.ID;
+                .ToList();
 
             return View(computers);
         }

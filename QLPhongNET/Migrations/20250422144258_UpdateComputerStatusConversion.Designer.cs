@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QLPhongNET.Data;
 
@@ -11,9 +12,11 @@ using QLPhongNET.Data;
 namespace QLPhongNET.Migrations
 {
     [DbContext(typeof(QLPhongNetContext))]
-    partial class QLPhongNetContextModelSnapshot : ModelSnapshot
+    [Migration("20250422144258_UpdateComputerStatusConversion")]
+    partial class UpdateComputerStatusConversion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -417,6 +417,7 @@ namespace QLPhongNET.Controllers
                 var notification = new Notification
                 {
                     UserID = request.UserID,
+                    User = request.User,
                     Title = "Nạp tiền thành công",
                     Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn đã được phê duyệt",
                     CreatedTime = DateTime.Now,
@@ -430,6 +431,7 @@ namespace QLPhongNET.Controllers
                 var notification = new Notification
                 {
                     UserID = request.UserID,
+                    User = request.User,
                     Title = "Nạp tiền bị từ chối",
                     Content = $"Yêu cầu nạp {request.Amount:N0} VNĐ của bạn bị từ chối. Lý do: {note ?? "Không có"}",
                     CreatedTime = DateTime.Now,
@@ -460,6 +462,53 @@ namespace QLPhongNET.Controllers
                 .OrderByDescending(r => r.ReportDate)
                 .ToListAsync();
             return View(revenues);
+        }
+
+        public async Task<IActionResult> GetActiveSessions()
+        {
+            try
+            {
+                var now = DateTime.Now;
+                var sessions = await _context.UsageSessions
+                    .Include(s => s.User)
+                    .Include(s => s.Computer)
+                        .ThenInclude(c => c.Category)
+                    .Where(s => s.EndTime == null)
+                    .Select(s => new
+                    {
+                        s.ID,
+                        userName = s.User.Username,
+                        computerName = s.Computer.Name,
+                        categoryName = s.Computer.Category.Name,
+                        startTime = s.StartTime,
+                        pricePerHour = s.Computer.Category.PricePerHour
+                    })
+                    .ToListAsync();
+
+                var activeSessions = sessions.Select(s => new
+                {
+                    s.ID,
+                    s.userName,
+                    s.computerName,
+                    s.categoryName,
+                    s.startTime,
+                    duration = (int)(now - s.startTime).TotalMinutes,
+                    cost = Math.Round((decimal)(now - s.startTime).TotalHours * s.pricePerHour, 0)
+                }).ToList();
+
+                _logger.LogInformation("Đã lấy được {0} phiên sử dụng đang hoạt động", activeSessions.Count);
+                return Json(activeSessions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi lấy danh sách phiên sử dụng đang hoạt động");
+                return Json(new { error = "Đã xảy ra lỗi khi lấy dữ liệu: " + ex.Message });
+            }
+        }
+
+        public IActionResult ActiveSessions()
+        {
+            return View();
         }
     }
 } 

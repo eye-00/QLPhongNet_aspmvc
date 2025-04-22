@@ -72,17 +72,17 @@ namespace QLPhongNET.Controllers
             _context.RechargeRequests.Add(request);
 
             // Tạo thông báo cho admin
-            var adminNotification = new Notification
+            var notification = new Notification
             {
-                UserID = user.ID, // Admin sẽ xem thông báo của tất cả user
-                Title = "Yêu cầu nạp tiền mới",
-                Content = $"Người dùng {user.FullName} yêu cầu nạp {amount:N0} VNĐ",
+                UserID = user.ID,
+                User = user,
+                Title = "Yêu cầu nạp tiền",
+                Content = $"Yêu cầu nạp {amount:N0} VNĐ của bạn đã được gửi",
                 CreatedTime = DateTime.Now,
-                IsRead = false,
-                Link = $"/Admin/Recharge/Process/{request.ID}"
+                IsRead = false
             };
 
-            _context.Notifications.Add(adminNotification);
+            _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
             TempData["Success"] = "Yêu cầu nạp tiền đã được gửi. Vui lòng chờ admin phê duyệt.";
