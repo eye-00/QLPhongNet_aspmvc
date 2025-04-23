@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\admin.css"
     },
     {
+      "Id": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
       "Id": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\wwwroot\\css\\main_db.css",
       "PackagePath": "staticwebassets\\css\\main_db.css"
     },

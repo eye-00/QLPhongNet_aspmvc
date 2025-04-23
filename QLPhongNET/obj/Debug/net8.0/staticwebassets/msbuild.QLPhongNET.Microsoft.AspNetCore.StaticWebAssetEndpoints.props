@@ -12,6 +12,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wt3tq9j2rt"},{"Name":"integrity","Value":"sha256-XHmnyxN9itjT6ZDYY8Yw/yY6GQF5jaZqtjEM65HS5ZE="},{"Name":"label","Value":"_content/QLPhongNET/css/admin.css"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1391"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022XHmnyxN9itjT6ZDYY8Yw/yY6GQF5jaZqtjEM65HS5ZE=\u0022"},{"Name":"Last-Modified","Value":"Mon, 21 Apr 2025 09:05:07 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/QLPhongNET/css/login.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\login.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-8AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1558"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00228AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM=\u0022"},{"Name":"Last-Modified","Value":"Wed, 23 Apr 2025 05:22:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/QLPhongNET/css/login.o6c1z7pses.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\login.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"o6c1z7pses"},{"Name":"integrity","Value":"sha256-8AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM="},{"Name":"label","Value":"_content/QLPhongNET/css/login.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1558"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00228AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM=\u0022"},{"Name":"Last-Modified","Value":"Wed, 23 Apr 2025 05:22:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/QLPhongNET/css/main_db.60k4tn33et.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\main_db.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

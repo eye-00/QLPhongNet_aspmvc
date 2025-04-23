@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Y9HfvjbsdY7iUew5o4P3r+1YL2YZSyujDImeWUXfF18=",
+  "Hash": "5vnWyi7nA7VrhltMfA3X2ym7SpWB7cuhQK6Cx+L7lzs=",
   "Source": "QLPhongNET",
   "BasePath": "_content/QLPhongNET",
   "Mode": "Default",
@@ -78,6 +78,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\admin.css"
+    },
+    {
+      "Identity": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\wwwroot\\css\\login.css",
+      "SourceId": "QLPhongNET",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\wwwroot\\",
+      "BasePath": "_content/QLPhongNET",
+      "RelativePath": "css/login#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "o6c1z7pses",
+      "Integrity": "8AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\login.css"
     },
     {
       "Identity": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\wwwroot\\css\\main_db.css",
@@ -1441,6 +1462,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-XHmnyxN9itjT6ZDYY8Yw/yY6GQF5jaZqtjEM65HS5ZE="
+        }
+      ]
+    },
+    {
+      "Route": "css/login.css",
+      "AssetFile": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\wwwroot\\css\\login.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1558"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 23 Apr 2025 05:22:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-8AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM="
+        }
+      ]
+    },
+    {
+      "Route": "css/login.o6c1z7pses.css",
+      "AssetFile": "D:\\Code2_\\New folder\\QLPhongNet_aspmvc\\QLPhongNET\\wwwroot\\css\\login.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1558"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 23 Apr 2025 05:22:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "o6c1z7pses"
+        },
+        {
+          "Name": "label",
+          "Value": "css/login.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-8AJCsEleiNsIndZnGMW7yqLABrsxlPZnkYsY/PksJpM="
         }
       ]
     },
