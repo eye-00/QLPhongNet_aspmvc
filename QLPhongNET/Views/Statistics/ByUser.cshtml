@@ -1,55 +1,154 @@
 @model IEnumerable<dynamic>
 @{
     ViewData["Title"] = "Thống kê theo người dùng";
+    Layout = "_AdminLayout";
 }
 
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">Thống kê theo người dùng</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <div>
+            <a href="@Url.Action("Index", "Statistics")" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
+        </div>
+    </div>
 
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <!-- Bộ lọc -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Bộ lọc</h6>
         </div>
         <div class="card-body">
-            <form method="get" class="form-inline">
-                <div class="form-group mx-sm-3 mb-2">
-                    <label for="startDate" class="mr-2">Từ ngày:</label>
-                    <input type="date" class="form-control" id="startDate" name="startDate" value="@ViewBag.StartDate?.ToString("yyyy-MM-dd")">
+            <form method="get" class="form-inline justify-content-center">
+                <div class="form-group mx-sm-3">
+                    <label for="fromDate" class="mr-2">Từ ngày:</label>
+                    <input type="date" class="form-control" id="fromDate" name="fromDate" 
+                           value="@(ViewBag.FromDate?.ToString("yyyy-MM-dd"))" required>
                 </div>
-                <div class="form-group mx-sm-3 mb-2">
-                    <label for="endDate" class="mr-2">Đến ngày:</label>
-                    <input type="date" class="form-control" id="endDate" name="endDate" value="@ViewBag.EndDate?.ToString("yyyy-MM-dd")">
+                <div class="form-group mx-sm-3">
+                    <label for="toDate" class="mr-2">Đến ngày:</label>
+                    <input type="date" class="form-control" id="toDate" name="toDate" 
+                           value="@(ViewBag.ToDate?.ToString("yyyy-MM-dd"))" required>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Lọc</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-filter"></i> Lọc
+                </button>
             </form>
         </div>
     </div>
 
+    <!-- Thống kê tổng quan -->
+    <div class="row">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Tổng số phiên sử dụng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @{
+                                    var totalSessions = Model.Sum(x => (int)x.TotalSessions);
+                                }
+                                @totalSessions
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Tổng giờ sử dụng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @{
+                                    var totalHours = Model.Sum(x => (double)x.TotalHours);
+                                }
+                                @totalHours.ToString("N1")
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Tổng doanh thu</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @{
+                                    var totalSpent = Model.Sum(x => (decimal)x.TotalSpent);
+                                }
+                                @totalSpent.ToString("N0") VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bảng chi tiết -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Kết quả thống kê</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết thống kê theo người dùng</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Tên đăng nhập</th>
+                            <th>Tên người dùng</th>
                             <th>Họ tên</th>
                             <th>Số phiên sử dụng</th>
                             <th>Tổng giờ sử dụng</th>
-                            <th>Tổng chi tiêu</th>
+                            <th>Doanh thu</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            var hours = (double)item.TotalHours;
+                            var spent = (decimal)item.TotalSpent;
                             <tr>
                                 <td>@item.Username</td>
                                 <td>@item.FullName</td>
-                                <td>@item.TotalSessions</td>
-                                <td>@item.TotalHours.ToString("N1")</td>
-                                <td>@item.TotalSpent.ToString("N0") VNĐ</td>
+                                <td>@((int)item.TotalSessions)</td>
+                                <td>@hours.ToString("N1")</td>
+                                <td>@spent.ToString("N0") VNĐ</td>
+                                <td>
+                                    <a href="@Url.Action("UserDetails", "Statistics", new { userId = item.UserID, fromDate = ViewBag.FromDate?.ToString("yyyy-MM-dd"), toDate = ViewBag.ToDate?.ToString("yyyy-MM-dd") })" 
+                                       class="btn btn-info btn-sm">
+                                        <i class="fas fa-info-circle"></i> Chi tiết
+                                    </a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -63,8 +162,23 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[4, 'desc']], // Sắp xếp theo doanh thu giảm dần
+                pageLength: 25
+            });
+
+            // Xử lý sự kiện khi thay đổi ngày
+            $('#fromDate, #toDate').change(function() {
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                
+                if (fromDate && toDate) {
+                    if (fromDate > toDate) {
+                        alert('Ngày bắt đầu không thể lớn hơn ngày kết thúc');
+                        $(this).val('');
+                    }
                 }
             });
         });

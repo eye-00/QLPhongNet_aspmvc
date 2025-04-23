@@ -1,34 +1,133 @@
 @model IEnumerable<dynamic>
 @{
     ViewData["Title"] = "Thống kê theo thời gian";
+    Layout = "_AdminLayout";
+    
+    // Tính toán tổng số liệu
+    var totalSessions = 0;
+    var totalHours = 0.0;
+    var totalRevenue = 0m;
+    
+    foreach (var item in Model)
+    {
+        totalSessions += (int)item.TotalSessions;
+        totalHours += (double)item.TotalHours;
+        totalRevenue += (decimal)item.TotalRevenue;
+    }
+
+    var startDate = ViewBag.StartDate as DateTime?;
+    var endDate = ViewBag.EndDate as DateTime?;
+    var groupBy = ViewBag.GroupBy as string ?? "day";
 }
 
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">Thống kê theo thời gian</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <div>
+            <a href="@Url.Action("Index", "Statistics")" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
+        </div>
+    </div>
 
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <!-- Bộ lọc -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Bộ lọc</h6>
         </div>
         <div class="card-body">
-            <form method="get" class="form-inline">
-                <div class="form-group mx-sm-3 mb-2">
-                    <label for="groupBy" class="mr-2">Nhóm theo:</label>
-                    <select class="form-control" id="groupBy" name="groupBy">
-                        <option value="day" selected="@(ViewBag.GroupBy == "day")">Ngày</option>
-                        <option value="week" selected="@(ViewBag.GroupBy == "week")">Tuần</option>
-                        <option value="month" selected="@(ViewBag.GroupBy == "month")">Tháng</option>
-                        <option value="year" selected="@(ViewBag.GroupBy == "year")">Năm</option>
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Từ ngày</label>
+                    <input type="date" name="startDate" class="form-control" value="@(startDate?.ToString("yyyy-MM-dd"))" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Đến ngày</label>
+                    <input type="date" name="endDate" class="form-control" value="@(endDate?.ToString("yyyy-MM-dd"))" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Nhóm theo</label>
+                    <select name="groupBy" class="form-control">
+                        <option value="day" selected="@(groupBy == "day")">Ngày</option>
+                        <option value="week" selected="@(groupBy == "week")">Tuần</option>
+                        <option value="month" selected="@(groupBy == "month")">Tháng</option>
+                        <option value="year" selected="@(groupBy == "year")">Năm</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Lọc</button>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-filter"></i> Lọc
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Thống kê tổng quan -->
+    <div class="row">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Tổng số phiên sử dụng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@totalSessions</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Tổng giờ sử dụng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@totalHours.ToString("N1")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Tổng doanh thu</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@totalRevenue.ToString("N0") VNĐ</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bảng chi tiết -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Kết quả thống kê</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết thống kê theo thời gian</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -44,11 +143,32 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            var date = (DateTime)item.Date;
                             <tr>
-                                <td>@item.Date.ToString("dd/MM/yyyy HH:00")</td>
-                                <td>@item.TotalSessions</td>
-                                <td>@item.TotalHours.ToString("N1")</td>
-                                <td>@item.TotalRevenue.ToString("N0") VNĐ</td>
+                                <td>
+                                    @switch (groupBy)
+                                    {
+                                        case "week":
+                                            // Tính ngày thứ 2 của tuần
+                                            var daysToSubtract = ((int)date.DayOfWeek + 6) % 7;
+                                            var weekStart = date.AddDays(-daysToSubtract);
+                                            var weekEnd = weekStart.AddDays(6);
+                                            <text>Tuần từ @weekStart.ToString("dd/MM/yyyy") đến @weekEnd.ToString("dd/MM/yyyy")</text>
+                                            break;
+                                        case "month":
+                                            <text>Tháng @date.ToString("MM/yyyy")</text>
+                                            break;
+                                        case "year":
+                                            <text>Năm @date.ToString("yyyy")</text>
+                                            break;
+                                        default:
+                                            <text>@date.ToString("dd/MM/yyyy")</text>
+                                            break;
+                                    }
+                                </td>
+                                <td class="text-right">@item.TotalSessions</td>
+                                <td class="text-right">@item.TotalHours.ToString("N1")</td>
+                                <td class="text-right">@item.TotalRevenue.ToString("N0") đ</td>
                             </tr>
                         }
                     </tbody>
@@ -62,8 +182,21 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[0, 'desc']],
+                pageLength: 25
+            });
+
+            // Kiểm tra ngày bắt đầu không lớn hơn ngày kết thúc
+            $('form').on('submit', function(e) {
+                var startDate = new Date($('input[name="startDate"]').val());
+                var endDate = new Date($('input[name="endDate"]').val());
+                
+                if (startDate > endDate) {
+                    e.preventDefault();
+                    alert('Ngày bắt đầu không được lớn hơn ngày kết thúc');
                 }
             });
         });

@@ -5,24 +5,96 @@
     Layout = "_AdminLayout";
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
-        <a href="@Url.Action("CreateComputer")" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Thêm máy tính
-        </a>
-    </div>
+<style>
+    .table {
+        color: #000 !important;
+    }
+    .dataTables_empty {
+        color: #000 !important;
+    }
+    .dataTables_info, 
+    .dataTables_length label, 
+    .dataTables_filter label {
+        color: #000 !important;
+    }
+    .page-link {
+        color: #4e73df !important;
+    }
+    .page-item.active .page-link {
+        background-color: #4e73df !important;
+        border-color: #4e73df !important;
+        color: #fff !important;
+    }
+    .sorting::before, 
+    .sorting::after,
+    .sorting_asc::before,
+    .sorting_asc::after,
+    .sorting_desc::before,
+    .sorting_desc::after {
+        color: #4e73df !important;
+    }
+    .dropdown-item {
+        color: #000 !important;
+    }
+    .dropdown-item:hover {
+        color: #2e59d9 !important;
+        background-color: #f8f9fc !important;
+    }
+    .btn-group .btn {
+        margin-right: 5px;
+    }
+    .btn-group .btn:last-child {
+        margin-right: 0;
+    }
+    
+    /* Thêm style cho các badge */
+    .badge-success {
+        background-color: #1cc88a !important;
+        color: #fff !important;
+    }
+    .badge-warning {
+        background-color: #f6c23e !important;
+        color: #000 !important;
+    }
+    .badge-danger {
+        background-color: #e74a3b !important;
+        color: #fff !important;
+    }
+</style>
 
-    @if (TempData["Message"] != null)
+<div class="container-fluid px-4">
+    <h1 class="mt-4">@ViewData["Title"]</h1>
+    
+    @if (TempData["Error"] != null)
     {
-        <div class="alert alert-success">
-            @TempData["Message"]
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
+    <div class="d-sm-flex align-items-center justify-content-end mb-4">
+        <div>
+            <a href="@Url.Action("CreateComputer")" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm máy tính
+            </a>
+            <a href="@Url.Action("ComputerCategories", "Admin")" class="btn btn-info">
+                <i class="fas fa-list"></i> Quản lý loại máy
+            </a>
+        </div>
+    </div>
+
     <!-- Thống kê -->
     <div class="row">
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -41,7 +113,7 @@
             </div>
         </div>
 
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -60,7 +132,7 @@
             </div>
         </div>
 
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -78,9 +150,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Tổng số máy</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Count()
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calculator fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách máy tính</h6>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="exportDropdown" data-toggle="dropdown">
+                    <i class="fas fa-download"></i> Xuất báo cáo
+                </button>
+                <div class="dropdown-menu" aria-labelledby="exportDropdown">
+                    <a class="dropdown-item" href="#"><i class="fas fa-file-excel"></i> Excel</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-file-pdf"></i> PDF</a>
+                </div>
+            </div>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -99,23 +202,39 @@
                             <tr>
                                 <td>@item.Name</td>
                                 <td>@item.Category?.Name</td>
-                                <td>@item.Category?.PricePerHour.ToString("N0") VNĐ</td>
+                                <td>@(item.Category?.PricePerHour.ToString("N0")) VNĐ</td>
                                 <td>
                                     @{
-                                        var (badgeClass, statusText) = item.Status switch
+                                        var statusClass = item.Status switch
                                         {
-                                            ComputerStatus.Available => ("success", "Trống"),
-                                            ComputerStatus.InUse => ("primary", "Đang sử dụng"),
-                                            ComputerStatus.Maintenance => ("warning", "Bảo trì"),
-                                            _ => ("secondary", "Không xác định")
+                                            ComputerStatus.Available => "badge badge-success",
+                                            ComputerStatus.InUse => "badge badge-warning",
+                                            ComputerStatus.Maintenance => "badge badge-danger",
+                                            _ => "badge badge-secondary"
+                                        };
+                                        var statusText = item.Status switch
+                                        {
+                                            ComputerStatus.Available => "Sẵn sàng",
+                                            ComputerStatus.InUse => "Đang sử dụng",
+                                            ComputerStatus.Maintenance => "Bảo trì",
+                                            _ => item.Status.ToString()
                                         };
                                     }
-                                    <span class="badge badge-@badgeClass">@statusText</span>
+                                    <span class="@statusClass">@statusText</span>
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("EditComputer", new { id = item.ID })" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                    <div class="btn-group">
+                                        <a href="@Url.Action("EditComputer", new { id = item.ID })" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detailsModal@(item.ID)">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        <a href="@Url.Action("DeleteComputer", new { id = item.ID })" class="btn btn-danger btn-sm" 
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa máy tính này?');">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -130,10 +249,24 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json',
+                    emptyTable: '<span class="text-info">Không có dữ liệu</span>'
+                },
+                pageLength: 25,
+                drawCallback: function(settings) {
+                    $('.dataTables_empty').addClass('text-info');
+                    $('.dataTables_length select').addClass('form-control-sm');
+                    $('.dataTables_filter input').addClass('form-control-sm');
+                    $('.paginate_button').addClass('text-gray-800');
                 }
             });
         });
+
+        function confirmDelete(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa máy tính này không?')) {
+                window.location.href = '@Url.Action("DeleteComputer")/' + id;
+            }
+        }
     </script>
 } 

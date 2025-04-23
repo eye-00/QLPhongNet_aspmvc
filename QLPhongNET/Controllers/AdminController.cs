@@ -555,5 +555,36 @@ namespace QLPhongNET.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> DeleteComputer(int id)
+        {
+            try
+            {
+                var computer = await _context.Computers.FindAsync(id);
+                if (computer == null)
+                {
+                    TempData["Error"] = "Không tìm thấy máy tính.";
+                    return RedirectToAction(nameof(Computers));
+                }
+
+                // Kiểm tra xem máy có đang được sử dụng không
+                if (computer.Status == ComputerStatus.InUse)
+                {
+                    TempData["Error"] = "Không thể xóa máy tính đang được sử dụng.";
+                    return RedirectToAction(nameof(Computers));
+                }
+
+                _context.Computers.Remove(computer);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Xóa máy tính thành công.";
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi xóa máy tính");
+                TempData["Error"] = "Có lỗi xảy ra khi xóa máy tính. Vui lòng thử lại sau.";
+            }
+
+            return RedirectToAction(nameof(Computers));
+        }
     }
 } 

@@ -89,11 +89,11 @@
                         <i class="fas fa-desktop"></i> Quản lý máy tính
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a asp-controller="Admin" asp-action="ComputerCategories">
                         <i class="fas fa-list"></i> Quản lý loại máy
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a asp-controller="Admin" asp-action="Services">
                         <i class="fas fa-concierge-bell"></i> Quản lý dịch vụ
@@ -104,15 +104,44 @@
                         <i class="fas fa-money-bill-wave"></i> Quản lý nạp tiền
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a asp-controller="Admin" asp-action="Revenue">
                         <i class="fas fa-chart-line"></i> Quản lý doanh thu
                     </a>
+                </li> -->
+                <li>
+                    <a asp-controller="Admin" asp-action="ActiveSessions">
+                        <i class="fas fa-desktop"></i> Theo dõi phiên sử dụng
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Admin" asp-action="ActiveSessions">
-                        <i class="fas fa-desktop"></i>
-                        <span>Theo dõi phiên sử dụng</span>
+                <!-- <li>
+                    <a asp-controller="Statistics" asp-action="Index">
+                        <i class="fas fa-chart-bar"></i> Thống kê
+                    </a>
+                </li> -->
+                <li>
+                    <a asp-controller="Statistics" asp-action="DailyDetails">
+                        <i class="fas fa-calendar-day"></i> Thống kê theo ngày
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Statistics" asp-action="ByComputer">
+                        <i class="fas fa-desktop"></i> Thống kê theo máy
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Statistics" asp-action="ByUser">
+                        <i class="fas fa-users"></i> Thống kê theo người dùng
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Statistics" asp-action="ByTime">
+                        <i class="fas fa-clock"></i> Thống kê theo thời gian
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Statistics" asp-action="Revenue">
+                        <i class="fas fa-money-bill"></i> Thống kê doanh thu
                     </a>
                 </li>
             </ul>

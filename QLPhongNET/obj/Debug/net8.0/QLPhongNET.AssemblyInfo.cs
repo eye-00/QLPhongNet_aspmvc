@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QLPhongNET")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c7fc6360f5f7b15b2b705532ce2326e5195d3c6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+494bba0ec4591d75b61b9929a73c7c08251567d8")]
 [assembly: System.Reflection.AssemblyProductAttribute("QLPhongNET")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QLPhongNET")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

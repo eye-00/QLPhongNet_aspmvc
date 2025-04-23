@@ -1,0 +1,243 @@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Chi tiết thống kê máy";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    /* Màu chữ chung */
+    .table, 
+    .dataTables_info, 
+    .dataTables_length label, 
+    .dataTables_filter label,
+    .text-gray-800,
+    .form-control,
+    label,
+    .dropdown-item,
+    .card-header h6,
+    .text-xs,
+    .h3,
+    .h5,
+    .text-primary,
+    .text-success,
+    .text-info,
+    .text-warning {
+        color: #000 !important;
+    }
+
+    /* DataTables */
+    .dataTables_empty {
+        color: #000 !important;
+        font-style: italic;
+    }
+
+    /* Phân trang */
+    .page-link {
+        color: #4e73df !important;
+    }
+    .page-item.active .page-link {
+        background-color: #4e73df !important;
+        border-color: #4e73df !important;
+        color: #fff !important;
+    }
+
+    /* Sắp xếp */
+    .sorting::before, 
+    .sorting::after,
+    .sorting_asc::before,
+    .sorting_asc::after,
+    .sorting_desc::before,
+    .sorting_desc::after {
+        color: #4e73df !important;
+    }
+
+    /* Card */
+    .card {
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+    }
+    
+    /* Icons */
+    .fa-2x.text-gray-300 {
+        color: rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Table */
+    .table th {
+        background-color: #f8f9fc !important;
+        border-top: 1px solid #e3e6f0 !important;
+        color: #000 !important;
+    }
+    
+    .table td {
+        vertical-align: middle !important;
+        color: #000 !important;
+    }
+
+    /* Card stats */
+    .border-left-primary {
+        border-left: 0.25rem solid #4e73df !important;
+    }
+    .border-left-success {
+        border-left: 0.25rem solid #1cc88a !important;
+    }
+    .border-left-info {
+        border-left: 0.25rem solid #36b9cc !important;
+    }
+
+    /* Font weight */
+    .font-weight-bold {
+        color: #000 !important;
+    }
+
+    /* Thông tin máy */
+    .info-label {
+        font-weight: bold;
+        color: #000 !important;
+    }
+
+    .info-value {
+        color: #000 !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <a href="@Url.Action("ByComputer", "Statistics", new { fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <!-- Thông tin máy -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin máy</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <p><span class="info-label">Tên máy:</span> <span class="info-value">@ViewBag.Computer?.Name</span></p>
+                </div>
+                <div class="col-md-3">
+                    <p><span class="info-label">Loại máy:</span> <span class="info-value">@ViewBag.Computer?.Category?.Name</span></p>
+                </div>
+                <div class="col-md-3">
+                    <p><span class="info-label">Giá/giờ:</span> <span class="info-value">@(ViewBag.Computer?.Category?.PricePerHour.ToString("N0") ?? "0") VNĐ</span></p>
+                </div>
+                <div class="col-md-3">
+                    <p><span class="info-label">Trạng thái:</span> <span class="info-value">@ViewBag.Computer?.Status</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thống kê tổng quan -->
+    <div class="row">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Tổng số phiên</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalSessions ?? 0)</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Tổng giờ sử dụng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@((ViewBag.TotalHours ?? 0).ToString("N1"))</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Tổng doanh thu</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@((ViewBag.TotalRevenue ?? 0).ToString("N0")) VNĐ</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết theo ngày -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết theo ngày</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Số phiên</th>
+                            <th>Tổng giờ</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.DailyStats != null)
+                        {
+                            foreach (var stat in ViewBag.DailyStats)
+                            {
+                                <tr>
+                                    <td>@stat.Date.ToString("dd/MM/yyyy")</td>
+                                    <td>@stat.TotalSessions</td>
+                                    <td>@stat.TotalHours.ToString("N1")</td>
+                                    <td>@stat.TotalRevenue.ToString("N0") VNĐ</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[0, 'desc']], // Sắp xếp theo ngày giảm dần
+                pageLength: 25
+            });
+        });
+    </script>
+}

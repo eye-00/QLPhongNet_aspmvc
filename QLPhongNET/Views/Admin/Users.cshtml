@@ -5,11 +5,95 @@
     Layout = "_AdminLayout";
 }
 
+<style>
+    /* Màu chữ chung */
+    .table, 
+    .dataTables_info, 
+    .dataTables_length label, 
+    .dataTables_filter label,
+    .text-gray-800,
+    .form-control,
+    label,
+    .dropdown-item,
+    .card-header h6,
+    .text-xs,
+    .h3,
+    .h5,
+    .text-primary,
+    .text-success,
+    .text-info,
+    .text-warning {
+        color: #000 !important;
+    }
+
+    /* DataTables */
+    .dataTables_empty {
+        color: #000 !important;
+        font-style: italic;
+    }
+
+    /* Phân trang */
+    .page-link {
+        color: #4e73df !important;
+    }
+    .page-item.active .page-link {
+        background-color: #4e73df !important;
+        border-color: #4e73df !important;
+        color: #fff !important;
+    }
+
+    /* Sắp xếp */
+    .sorting::before, 
+    .sorting::after,
+    .sorting_asc::before,
+    .sorting_asc::after,
+    .sorting_desc::before,
+    .sorting_desc::after {
+        color: #4e73df !important;
+    }
+
+    /* Badge */
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .badge-admin {
+        color: #fff !important;
+        background-color: #e74a3b !important;
+    }
+    .badge-user {
+        color: #fff !important;
+        background-color: #4e73df !important;
+    }
+
+    /* Table */
+    .table th {
+        background-color: #f8f9fc !important;
+        border-top: 1px solid #e3e6f0 !important;
+        color: #000 !important;
+    }
+    
+    .table td {
+        vertical-align: middle !important;
+        color: #000 !important;
+    }
+
+    /* Action buttons */
+    .btn-action {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        margin: 0 0.25rem;
+    }
+    .btn-action i {
+        margin-right: 0.25rem;
+    }
+</style>
+
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
         <a href="@Url.Action("CreateUser")" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Thêm người dùng
+            <i class="fas fa-user-plus"></i> Thêm người dùng
         </a>
     </div>
 
@@ -17,12 +101,90 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             @TempData["Success"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
+    <!-- Thống kê -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Tổng số người dùng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Count()
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Người dùng thường</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Count(u => u.Role == UserRole.User)
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Quản trị viên</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Count(u => u.Role == UserRole.Admin)
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-shield fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Tổng số dư</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.Sum(u => u.Balance).ToString("N0") VNĐ
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách người dùng -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
@@ -49,20 +211,30 @@
                                 <td>@item.Phone</td>
                                 <td>@item.Balance.ToString("N0") VNĐ</td>
                                 <td>
-                                    <span class="badge badge-@(item.Role == UserRole.Admin ? "danger" : "primary")">
-                                        @(item.Role == UserRole.Admin ? "Quản trị viên" : "Người dùng")
-                                    </span>
+                                    @if (item.Role == UserRole.Admin)
+                                    {
+                                        <span class="badge badge-admin">Quản trị viên</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-user">Người dùng</span>
+                                    }
                                 </td>
                                 <td>
-                                    <div class="btn-group">
-                                        <a href="@Url.Action("EditUser", new { id = item.ID })" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a asp-action="DeleteUser" asp-route-id="@item.ID" class="btn btn-danger btn-sm"
-                                           onclick="return confirm('Bạn có chắc muốn xóa người dùng này?');">
+                                    <a href="@Url.Action("EditUser", new { id = item.ID })" class="btn btn-primary btn-action">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="@Url.Action("UserDetails", new { id = item.ID })" class="btn btn-info btn-action">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    @if (item.Role != UserRole.Admin)
+                                    {
+                                        <a href="@Url.Action("DeleteUser", new { id = item.ID })" 
+                                           class="btn btn-danger btn-action"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">
                                             <i class="fas fa-trash"></i>
                                         </a>
-                                    </div>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -77,9 +249,11 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
-                }
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+                },
+                order: [[0, 'asc']], // Sắp xếp theo tên đăng nhập
+                pageLength: 25
             });
         });
     </script>
